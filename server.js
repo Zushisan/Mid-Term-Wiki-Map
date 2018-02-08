@@ -43,6 +43,28 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// Registration Form
+  app.post('/user', (req, res) => {
+    console.log(req.body);
+    res.status(201).send();
+  });
+
+    // Login form
+  app.post('/login', (req, res) => {
+    console.log('login');
+  });
+
+
+
+
+
+
+
+
+
+
+
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });

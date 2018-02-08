@@ -8,3 +8,13 @@ $(() => {
     }
   });;
 });
+
+// $(() => {
+//   console.log("I am starting")
+//   $.ajax({
+//     method: "POST",
+//     url: "/user"
+//   }).done((users) => {
+//     console.log("I am done")
+//   });;
+// });

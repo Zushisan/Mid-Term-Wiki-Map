@@ -7,7 +7,7 @@ $(() => {
       $("<div>").text(user.name).appendTo($("body"));
     }
   });;
-});
+
 
 // $(() => {
 //   console.log("I am starting")
@@ -22,18 +22,20 @@ $(() => {
 
 $(".toronto").on('click', function (event) {
 
+  console.log("Here");
 
+event.preventDefault();
 
   $.ajax({
     method: "GET",
     url: "/maps"
   }).done((maps) => {
     for(map of maps) {
-      $("<div>").text(map.title).appendTo($("body"));
+      $("<button>").text(map.title).appendTo($("body"));
     }
   });;
 
-event.preventDefault();
 
+});
 
 });

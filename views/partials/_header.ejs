@@ -27,8 +27,8 @@
       <!-- home -->
       <button class='toHome' type='button'>HOME</button>
       <!-- login -->
-      <button class='toLogin' type='button' data-toggle='dropdown'>LOGIN</button>
-      <div class='dropdown-menu' role='login'>
+      <button class='toLogin' type='button' data-toggle='dropdown' id='dropdownLogin'>LOGIN</button>
+      <div class='dropdown-menu' aria-labelledby='dropdownLogin'>
         <form class='login' action='/login' method='POST'>
           <h2>LOGIN</h2>
           Username:<input name='username'>
@@ -41,9 +41,9 @@
 
     <!-- register -->
 
-      <button class='toRegister' type='button' data-toggle='dropdown'>REGISTER</button>
-        <div class='dropdown-menu' role='register'>
-          <form class='register' action='/user' method='POST'>
+      <button class='toRegister' type='button' data-toggle='dropdown' id='dropdownRegister'>REGISTER</button>
+        <div class='dropdown-menu' aria-labelledby='dropdownRegister'>
+          <form class='register' action='/register' method='POST'>
             <h2>REGISTER</h2>
             Username:<input name='username'>
             Email:<input name='email' placeholder="name@example.com">

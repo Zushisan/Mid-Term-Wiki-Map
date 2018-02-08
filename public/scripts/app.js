@@ -18,3 +18,22 @@ $(() => {
 //     console.log("I am done")
 //   });;
 // });
+
+
+$(".toronto").on('click', function (event) {
+
+
+
+  $.ajax({
+    method: "GET",
+    url: "/maps"
+  }).done((maps) => {
+    for(map of maps) {
+      $("<div>").text(map.title).appendTo($("body"));
+    }
+  });;
+
+event.preventDefault();
+
+
+});

@@ -36,24 +36,38 @@
       }
     </script>
 
-  <!-- add nav bar on the other page include home, login, logout , user info button -->
+  <!-- add nav bar include home, login, logout , user info button -->
+   <nav id="nav-bar">
+
+     <button class='toHome' type='button'>HOME</button>
+     <button class='toLogin' type='button'>LOGIN</button>
+     <button class='toLogout' type='button'>LOGOUT</button>
+     <button class='toRegister' type='button'>REGISTER</button>
+     <button class='toCreateMap' type='button'>CREATE MAP</button>
+     <button class='toUserPro' type='button'>USER PROFILE</button>
+
+     <!-- login and register form -->
+     <form class='login' action='/login' method='POST'>
+      <h2>LOGIN</h2>
+      Username:<input name='username'>
+      Email:<input name='email' placeholder="name@example.com">
+      Password:<input name='password'>
+    </form>
+     <form class='register' action='/register' method='POST'>
+      <h2>REGISTER</h2>
+      Username:<input name='username'>
+      Email:<input name='email' placeholder="name@example.com">
+      Password:<input name='password'>
+    </form>
+
+
+   </nav>
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-  </body>
+</body>
   <footer>
 
   </footer>

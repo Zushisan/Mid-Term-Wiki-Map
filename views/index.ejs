@@ -153,17 +153,43 @@
              var contentString =
             `<div class="whole-button">
                 <img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">
-                  <p class="thep"><b>Title:</b> No.1</p>
+                <p class="markerTitle"><b>Title:</b><span class="spanTitle"> No.1</span></p>
                 <div id="bodyContent">
-                  <p><b>Description:</b>The best restaurant in Toronto</b></p>
+                  <p><b>Description:</b><span class="spanDescription">The best restaurant in Toronto</span></b></p>
                 </div>
                 <button class="markerEdit"> Edit me </button>
             </div>`;
 
             $('body').on('click', '.markerEdit', function(event) {
 
-              // let $wholeMarker = $(this).parent().parent();
-              // $('$wholeMarker').remove();
+              let $wholeMarker = $(this).parent().parent();
+              let titleValue = $wholeMarker.find(".spanTitle").text();
+              let descriptionValue = $wholeMarker.find(".spanDescription").text();
+
+              $wholeMarker.find(".spanTitle").text('');
+              $wholeMarker.find(".spanDescription").text('');
+              $('.whole-button .spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
+              $('.whole-button .spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
+
+              $('.markerEdit').remove();
+              $('.whole-button').append(`<button class="markerConfirm"> Confirm </button>`);
+
+              $('body').on('click', '.markerConfirm', function(event){
+                $('.markerEdit').remove();
+
+                let $wholeConfirm = $(this).parent().parent();
+                let newValue = $wholeConfirm.find(".inputValue").val();
+                let newValueDesc = $wholeConfirm.find(".inputValueDesc").val();
+
+                $('.inputValue').remove();
+                $('.inputValueDesc').remove();
+                $('.markerConfirm').remove();
+                $('.whole-button .spanTitle').append(newValue);
+                $('.whole-button .spanDescription').append(newValueDesc);
+                $('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
+
+
+              });
 
             });
 

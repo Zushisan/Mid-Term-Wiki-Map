@@ -1,25 +1,6 @@
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>WIKI MAP</title>
-
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-
-  </head>
-
-  <body>
 
   <!-- add nav bar include home, login, logout , user info button -->
    <nav id="nav-bar">
@@ -27,30 +8,28 @@
       <!-- home -->
       <button class='toHome' type='button'>HOME</button>
       <!-- login -->
-      <button class='toLogin' type='button' data-toggle='dropdown' id='dropdownLogin'>LOGIN</button>
-      <div class='dropdown-menu' aria-labelledby='dropdownLogin'>
-        <form class='login' action='/login' method='POST'>
+      <button class='toLogin' type='button'>LOGIN</button>
+
+        <form class='login' action='/login' method='POST' id='loginForm'>
           <h2>LOGIN</h2>
           Username:<input name='username'>
           Email:<input name='email' placeholder="name@example.com">
           Password:<input name='password'>
           <input type="submit" name="submitLogin" value="LOGIN">
-
         </form>
-      </div>
+
 
     <!-- register -->
 
-      <button class='toRegister' type='button' data-toggle='dropdown' id='dropdownRegister'>REGISTER</button>
-        <div class='dropdown-menu' aria-labelledby='dropdownRegister'>
-          <form class='register' action='/register' method='POST'>
+      <button class='toRegister' type='button' >REGISTER</button>
+          <form class='register' action='/register' method='POST' id='registerForm'>
             <h2>REGISTER</h2>
             Username:<input name='username'>
             Email:<input name='email' placeholder="name@example.com">
             Password:<input name='password'>
           <input type="submit" name="submitRegister" value="REGISTER">
           </form>
-        </div>
+
 
 
 
@@ -68,10 +47,3 @@
 
 
 
-
-
-</body>
-  <footer>
-
-  </footer>
-</html>

@@ -1,0 +1,34 @@
+
+
+  <!-- add nav bar include home, login, logout , user info button -->
+   <nav id="nav-bar">
+      <!-- home -->
+      <button class='toHome' type='button'>HOME</button>
+      <!-- login -->
+
+
+        <form class='login' action='/login' method='POST'>
+          <h2>LOGIN</h2>
+          Username:<input name='username'>
+          Email:<input name='email' placeholder="name@example.com">
+          Password:<input name='password'>
+          <input type="submit" name="submitLogin" value="LOGIN">
+        </form>
+
+    <!-- register -->
+
+          <form class='register' action='/user' method='POST'>
+            <h2>REGISTER</h2>
+            Username:<input name='username'>
+            Email:<input name='email' placeholder="name@example.com">
+            Password:<input name='password'>
+          <input type="submit" name="submitRegister" value="REGISTER">
+          </form>
+
+      <button class='toLogout' type='button'>LOGOUT</button>
+
+     <button class='toCreateMap' type='button' href='/'>CREATE MAP</button>
+     <button class='toUserPro' type='button'>USER PROFILE</button>
+
+   </nav>
+

@@ -14,14 +14,8 @@ module.exports = (knex) => {
     });
   });
 
-  //   router.get("/user", (req, res) => {
-  //   knex
-  //     .select("*")
-  //     .from("users")
-  //     .then((results) => {
-  //       res.json(results);
-  //   });
-  // });
+
+
 
   return router;
 }

@@ -7,6 +7,7 @@ const ENV         = process.env.ENV || "development";
 const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
+const cookieSession = require('cookie-session');
 const app         = express();
 
 const knexConfig  = require("./knexfile");
@@ -25,6 +26,11 @@ app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
+
+app.use(cookieSession({
+  name: 'session',
+  secret: "key1",
+}));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,26 +53,29 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// Registration Form
-  app.post('/user', (req, res) => {
-    console.log(req.body);
-    res.status(201).send();
+// Registration Form STILL REDIRECTS WHERE WE DONT WANT BUT WORKS
+  app.post('/register', (req, res) => {
+    let username = req.body.username;
+    let password = req.body.password;
+
+    knex('users')
+      .returning(['name', 'password'])
+      .insert({name: username, password: password})
+      .then((results) => {
+        req.session.user_id = username;
+        res.json(results);
+    });
   });
 
-    // Login form
+    // Login form doesnt work yet
   app.post('/login', (req, res) => {
     console.log('login');
   });
 
-
-
-
-
-
-
-
-
-
+  app.delete('/logout', (req, res) => {
+    // cookie session delete
+    console.log('logout');
+  })
 
 
 app.listen(PORT, () => {

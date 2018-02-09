@@ -14,8 +14,9 @@ module.exports = (knex) => {
     });
   });
 
-
-
+  router.post("/7/maps", (req, res) => {
+    console.log(req.body);
+    });
 
   return router;
 }

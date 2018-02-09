@@ -11,9 +11,23 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtXOaqqDPKHhH2X8Oog8vYdwmqrQn7Lpc&libraries=places"></script> -->
 
-
-
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
 
   </head>
 
@@ -28,6 +42,81 @@
           <button class= "toronto">Best Restaurants in Toronto</button>
         <!-- </form> -->
       </section>
+
+       <div id="map"></div>
+    <script>
+
+
+
+      var map;
+      var locationToronto = {lat: 43.6532, lng: -79.3832};
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: locationToronto,
+          zoom: 14,
+          gestureHandling: 'cooperative'
+
+        });
+
+// to add a marker
+         var marker = new google.maps.Marker({
+           position: map.center,
+           map: map
+         });
+         map.panTo(marker.position);
+
+
+         var lat = map.getCenter().lat();
+         var lng =  map.getCenter().lng();
+         var latMarker = marker.getPosition().lat();
+         var lngMarker = marker.getPosition().lng();
+
+         console.log("Map:", lat, lng, "Marker:", latMarker, lngMarker );
+
+        $(() => {
+          $(".toCreateMap").on('click', function (event){
+
+              $.ajax({
+                method: "POST",
+                url: `api/users/7/maps`,
+                data: {lat, lng}
+              }).done((map) => {
+                console.log(map);
+              });
+              event.preventDefault();
+            });
+        });
+
+// to get marker location and console log the lat and lng
+
+        google.maps.event.addListener(map, 'click', function(event) {
+         placeMarker(event.latLng);
+
+        });
+
+        function placeMarker(location) {
+            var markerNew = new google.maps.Marker({
+            position: location,
+            map: map
+
+             });
+
+            var latMarkerNew = markerNew.getPosition().lat();
+            var lngMarkerNew = markerNew.getPosition().lng();
+            console.log("Marker:", latMarkerNew, lngMarkerNew );
+
+    }
+
+ }
+
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtXOaqqDPKHhH2X8Oog8vYdwmqrQn7Lpc&callback=initMap"
+    async defer>
+
+    </script>
+
+
 
 
   </body>

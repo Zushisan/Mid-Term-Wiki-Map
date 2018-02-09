@@ -59,10 +59,10 @@ app.get("/", (req, res) => {
     let password = req.body.password;
 
     knex('users')
-      .returning(['name', 'password'])
+      .returning(['id', 'name', 'password'])
       .insert({name: username, password: password})
       .then((results) => {
-        req.session.user_id = username;
+        req.session.user_id = id;
         res.json(results);
     });
   });

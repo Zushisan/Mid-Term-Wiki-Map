@@ -33,20 +33,20 @@ $(() => {
     event.preventDefault();
   });
 
-  $(".toCreateMap").on('click', function (event) {
+  // $(".toCreateMap").on('click', function (event) {
 
-    // $.ajax({
-    //   method: "GET",
-    //   url: "/maps"
-    // }).done((maps) => {
-    //   for(map of maps) {
-    //     $("<button class=\"map-button\" data-attr-id="+map.id+">").text(map.title).appendTo($("body"));
-    //   }
-    // });
-    // event.preventDefault();
+  //   // $.ajax({
+  //   //   method: "GET",
+  //   //   url: "/maps"
+  //   // }).done((maps) => {
+  //   //   for(map of maps) {
+  //   //     $("<button class=\"map-button\" data-attr-id="+map.id+">").text(map.title).appendTo($("body"));
+  //   //   }
+  //   // });
+  //   // event.preventDefault();
 
-    console.log($("#map"));
-  });
+  //   // console.log($("#map"));
+  // });
 
 });
 

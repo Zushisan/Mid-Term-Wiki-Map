@@ -43,10 +43,17 @@
         <!-- </form> -->
       </section>
 
-       <div id="map"></div>
+      <form class="newmap" action="api/users/4/maps" method="POST">
+        Map Title:<input name='map-title'>
+        <button class='toCreateMap' type="submit">CREATE MAP</button>
+      </form>
+
+       <div id="map">
+
+       </div>
     <script>
 
-
+      let markersCoord = [];
 
       var map;
       var locationToronto = {lat: 43.6532, lng: -79.3832};
@@ -71,17 +78,22 @@
          var latMarker = marker.getPosition().lat();
          var lngMarker = marker.getPosition().lng();
 
-         console.log("Map:", lat, lng, "Marker:", latMarker, lngMarker );
+         // console.log("Map:", lat, lng, "Marker:", latMarker, lngMarker );
 
         $(() => {
-          $(".toCreateMap").on('click', function (event){
+          $(".newmap").on('submit', function (event){
+
+
+              let mapObject = {lat, lng};
+              let title = $(this).serialize();
+              title = title.slice(10);
 
               $.ajax({
                 method: "POST",
-                url: `api/users/7/maps`,
-                data: {lat, lng}
+                url: `api/users/4/maps`,
+                data: {title, mapObject, markersCoord}
               }).done((map) => {
-                console.log(map);
+                  console.log(map, " SUCCESS");
               });
               event.preventDefault();
             });
@@ -103,8 +115,11 @@
 
             var latMarkerNew = markerNew.getPosition().lat();
             var lngMarkerNew = markerNew.getPosition().lng();
-            console.log("Marker:", latMarkerNew, lngMarkerNew );
+            // console.log("Marker:", latMarkerNew, lngMarkerNew );
+            let coordObject = {latMarkerNew, lngMarkerNew}
 
+            markersCoord.push(coordObject);
+            // console.log(markersCoord);
     }
 
  }

@@ -3,15 +3,8 @@
   <head>
     <title>WIKI MAP</title>
 
-
-
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtXOaqqDPKHhH2X8Oog8vYdwmqrQn7Lpc&libraries=places"></script> -->
 
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
@@ -19,7 +12,7 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 100%;
+        height: 50%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -33,45 +26,59 @@
 
   <body>
 
-
-
- <% include ./partials/_header %>
-
-    <section>
+      <section>
         <!-- <form method="GET" action="/maps"> -->
           <button class= "toronto">Best Restaurants in Toronto</button>
         <!-- </form> -->
       </section>
 
+      <form>
+        Title<br>
+        <input type="text" name="title"><br>
+        Last name:<br>
+        <input type="text" name="Description">
+        <input type="submit" value="Submit">
+      </form>
+
        <div id="map"></div>
     <script>
 
 
-
-      var map;
-      var locationToronto = {lat: 43.6532, lng: -79.3832};
+      var output = [];
+      let map;
+      let locationToronto = {lat: 43.6532, lng: -79.3832};
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: locationToronto,
-          zoom: 14,
-          gestureHandling: 'cooperative'
-
+          zoom: 12,
+          zoomControl: true,
+          mapTypeControl: true,
+          scaleControl: true,
+          streetViewControl: true,
+          rotateControl: true,
+          fullscreenControl: true
         });
 
-// to add a marker
-         var marker = new google.maps.Marker({
-           position: map.center,
-           map: map
-         });
-         map.panTo(marker.position);
+// To add a marker by default on the page
+         // var marker = new google.maps.Marker({
+         //   position: map.center,
+         //   map: map
+         // });
+         // map.panTo(marker.position);
 
+         // var latMarker = marker.getPosition().lat();
+         // var lngMarker = marker.getPosition().lng();
+
+
+//To get the coordinates of the canter of the map location
 
          var lat = map.getCenter().lat();
          var lng =  map.getCenter().lng();
-         var latMarker = marker.getPosition().lat();
-         var lngMarker = marker.getPosition().lng();
 
-         console.log("Map:", lat, lng, "Marker:", latMarker, lngMarker );
+         // console.log("Map:", lat, lng);
+
+
+// This is the event hanlder to Creat the map. It will basically send the map details and the coordinates etc on the map
 
         $(() => {
           $(".toCreateMap").on('click', function (event){
@@ -79,31 +86,68 @@
               $.ajax({
                 method: "POST",
                 url: `api/users/7/maps`,
-                data: {lat, lng}
+                data: {output : output},
               }).done((map) => {
                 console.log(map);
               });
               event.preventDefault();
             });
+
         });
 
 // to get marker location and console log the lat and lng
 
+        var icon = "http://maps.google.com/mapfiles/kml/pal2/icon32.png";
+
         google.maps.event.addListener(map, 'click', function(event) {
+
+
          placeMarker(event.latLng);
 
         });
 
         function placeMarker(location) {
+            // var markerLabel='GO!';
+            // var markerIcon = {
+            //               url: 'http://image.flaticon.com/icons/svg/252/252025.svg',
+            //               scaledSize: new google.maps.Size(80, 80),
+            //               origin: new google.maps.Point(0, 0),
+            //               anchor: new google.maps.Point(32,65)
+            //             };
+
+
             var markerNew = new google.maps.Marker({
             position: location,
-            map: map
-
+            animation: google.maps.Animation.DROP,
+            map: map,
+            icon: icon,
+            // label: markerLabel
              });
 
             var latMarkerNew = markerNew.getPosition().lat();
             var lngMarkerNew = markerNew.getPosition().lng();
-            console.log("Marker:", latMarkerNew, lngMarkerNew );
+            // console.log("Marker:", latMarkerNew, lngMarkerNew );
+
+             var contentString =
+            '<img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">'+'<p><b>Title:</b> No.1</form>'+'<div id="bodyContent">'+
+            '<p><b>Description:</b>'+'The best restaurant in Toronto</p>'+
+            '</div>';
+
+            var obj = {latMarkerNew, lngMarkerNew, icon, contentString};
+
+            console.log(latMarkerNew, lngMarkerNew);
+
+            output.push(obj);
+
+            var infowindow = new google.maps.InfoWindow({
+              content: contentString,
+              maxWidth: 200
+            });
+
+
+            markerNew.addListener('click', function() {
+              infowindow.open(map, markerNew);
+            });
 
     }
 

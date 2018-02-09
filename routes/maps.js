@@ -14,6 +14,17 @@ module.exports = (knex) => {
     });
   });
 
+  router.get("/:id", (req, res) => {
+
+    knex
+      .select("*")
+      .from("maps")
+      .where("id", req.params.id)
+      .then((results) => {
+        res.json(results);
+    });
+  });
+
   //   router.get("/user", (req, res) => {
   //   knex
   //     .select("*")

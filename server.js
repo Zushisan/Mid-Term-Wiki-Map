@@ -62,7 +62,8 @@ app.get("/", (req, res) => {
       .returning(['id', 'name', 'password'])
       .insert({name: username, password: password})
       .then((results) => {
-        req.session.user_id = id;
+
+        req.session.user_id = results[0].id;
         res.json(results);
     });
   });

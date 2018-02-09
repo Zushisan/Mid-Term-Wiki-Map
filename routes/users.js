@@ -19,15 +19,15 @@ module.exports = (knex) => {
     // console.log(req.body)
     // Map database entry
     let mapTitle = req.body.title;
-    let mapLat = parseInt(req.body.mapObject.lat);
-    let mapLng = parseInt(req.body.mapObject.lng);
+    let mapLat = req.body.mapObject.lat.toString();
+    let mapLng = req.body.mapObject.lng.toString();
     let mapCategory = "testing";
     let mapUserID = 4;
 
     //points database entry
     let markersCoord = req.body.markersCoord;
-    let markerLat = 0;
-    let markerLng = 0;
+    // let markerLat = '';
+    // let markerLng = '';
     let markerTitle = "All the markers title";
     let markerDescription = "I am a marker description";
     let markerImg = "I am an img ???";
@@ -40,8 +40,8 @@ module.exports = (knex) => {
         for(let markerObject of markersCoord){
           let futurMarkerObject = {}
 
-          futurMarkerObject.lat = parseInt(markerObject.latMarkerNew);
-          futurMarkerObject.long = parseInt(markerObject.lngMarkerNew);
+          futurMarkerObject.lat = markerObject.latMarkerNew.toString();
+          futurMarkerObject.long = markerObject.lngMarkerNew.toString();
           futurMarkerObject.title = markerTitle;
           futurMarkerObject.description = markerDescription;
           futurMarkerObject.img = markerImg;

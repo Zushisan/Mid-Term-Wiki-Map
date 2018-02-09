@@ -21,7 +21,7 @@
         padding: 0;
       }
     </style>
-
+     <% include ./partials/_header %>
   </head>
 
   <body>
@@ -151,11 +151,21 @@
 
 
              var contentString =
-            '<img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">'+'<p><b>Title:</b> No.1</form>'+'<div id="bodyContent">'+
-            '<p><b>Description:</b>'+'The best restaurant in Toronto</p>'+
-            '</div>';
+            `<div class="whole-button">
+                <img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">
+                  <p class="thep"><b>Title:</b> No.1</p>
+                <div id="bodyContent">
+                  <p><b>Description:</b>The best restaurant in Toronto</b></p>
+                </div>
+                <button class="markerEdit"> Edit me </button>
+            </div>`;
 
+            $('body').on('click', '.markerEdit', function(event) {
 
+              // let $wholeMarker = $(this).parent().parent();
+              // $('$wholeMarker').remove();
+
+            });
 
             console.log(latMarkerNew, lngMarkerNew);
 

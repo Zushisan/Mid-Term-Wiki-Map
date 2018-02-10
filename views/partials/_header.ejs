@@ -3,14 +3,19 @@
   <!-- add nav bar include home, login, logout , user info button -->
    <nav id="nav-bar">
     <div class="nav">
-      <!-- home -->
+
           <form action='/' method='GET'>
             <button>Home</button>
           </form>
-      <!-- login -->
+
           <form action='/main' method='GET'>
             <button>Main Page</button>
           </form>
+
+          <form action='/all' method='GET'>
+            <button>All Maps</button>
+          </form>
+
 
 
         <form class='login' action='/login' method='POST'>
@@ -20,7 +25,7 @@
           <input type="submit" name="submitLogin" value="LOGIN">
         </form>
 
-    <!-- register -->
+
 
           <form class='register' action='/register' method='POST'>
             <h2>REGISTER</h2>

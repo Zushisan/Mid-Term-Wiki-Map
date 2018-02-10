@@ -58,6 +58,11 @@ app.get("/main", (req, res) => {
   res.render("main");
 });
 
+// All maps page
+app.get("/all", (req, res) => {
+  res.render("all");
+});
+
 // Registration Form STILL REDIRECTS WHERE WE DONT WANT BUT WORKS
   app.post('/register', (req, res) => {
     let username = req.body.username;

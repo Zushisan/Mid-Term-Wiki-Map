@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-
+      <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+      <script type="text/javascript" src="/scripts/app.js"></script>
 
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
@@ -30,7 +29,6 @@
   </head>
 
   <body>
-
 
       <section>
         <!-- <form method="GET" action="/maps"> -->
@@ -133,7 +131,10 @@
 
         });
 
+
         function placeMarker(location) {
+
+          var dieRoll = Math.floor(Math.random() * 1000000) +1;
             // var markerLabel='GO!';
             // var markerIcon = {
             //               url: 'http://image.flaticon.com/icons/svg/252/252025.svg',
@@ -143,17 +144,12 @@
             //             };
 
 
-
-
-
-
-
             var markerNew = new google.maps.Marker({
             position: location,
             animation: google.maps.Animation.DROP,
             map: map,
             icon: icon,
-            // label: markerLabel
+            id: dieRoll
              });
 
             var latMarkerNew = markerNew.getPosition().lat();
@@ -162,7 +158,7 @@
 
 
              var contentString =
-            `<div class="whole-button">
+            `<div class="whole-button" id="${markerNew.id}">
                 <img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">
                 <p class="markerTitle"><b>Title:</b><span class="spanTitle"> No.1</span></p>
                 <div id="bodyContent">
@@ -170,37 +166,56 @@
                 </div>
                 <button class="markerEdit"> Edit me </button>
             </div>`;
+// `#${markerNew.id}`,
+            $(() => {
 
-            $('body').on('click', '.markerEdit', function(event) {
+            $('body').on('click',  `#${markerNew.id}`,".markerEdit", function(event) {
 
-              let $wholeMarker = $(this).parent().parent();
-              let titleValue = $wholeMarker.find(".spanTitle").text();
-              let descriptionValue = $wholeMarker.find(".spanDescription").text();
+              console.log(markerNew.id);
 
-              $wholeMarker.find(".spanTitle").text('');
-              $wholeMarker.find(".spanDescription").text('');
-              $('.whole-button .spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
-              $('.whole-button .spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
+              // let pointID = $(this).parents('div:first').attr('id');
+              // let pointVar = $(`#${pointID}`);
 
-              $('.markerEdit').remove();
-              $('.whole-button').append(`<button class="markerConfirm"> Confirm </button>`);
+              // let $wholeMarker = $(this).parent().parent();
+              let titleValue = $(this).find(".spanTitle").text();
 
-              $('body').on('click', '.markerConfirm', function(event){
-                $('.markerEdit').remove();
+              let descriptionValue = $(this).find(".spanDescription").text();
 
-                let $wholeConfirm = $(this).parent().parent();
-                let newValue = $wholeConfirm.find(".inputValue").val();
-                let newValueDesc = $wholeConfirm.find(".inputValueDesc").val();
+              // var get = document.getElementById(pointID);
 
-                $('.inputValue').remove();
-                $('.inputValueDesc').remove();
-                $('.markerConfirm').remove();
-                $('.whole-button .spanTitle').append(newValue);
-                $('.whole-button .spanDescription').append(newValueDesc);
-                $('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
+             $(this).find(".spanTitle").text('');
+
+              $(this).find(".spanDescription").text('');
+
+              $(this).find('.spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
+              $(this).find('.spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
+
+              $(this).find('.markerEdit').remove();
+              $(this).append(`<button class="markerConfirm"> Confirm </button>`);
+
+              $('body').on('click',`#${markerNew.id}`, ".markerConfirm", function(event){
+
+                $(this).find('.markerConfirm').remove();
+
+                // let $wholeConfirm = $(this).parent().parent();
+                let newValue = $(this).find(".inputValue").val();
+                let newValueDesc = $(this).find(".inputValueDesc").val();
+
+                console.log(newValue, newValueDesc);
+
+                $(this).find('.inputValue').remove();
+                $(this).find('.inputValueDesc').remove();
+                $(this).find('.markerConfirm').remove();
+                $(this).find('.spanTitle').append(newValue);
+                $(this).find('.spanDescription').append(newValueDesc);
+                $(this).find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
+
 
               });
+
             });
+
+          });
 
             console.log(latMarkerNew, lngMarkerNew);
 
@@ -211,6 +226,7 @@
 
 
             markerNew.addListener('click', function() {
+
               infowindow.open(map, markerNew);
             });
 

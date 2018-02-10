@@ -15,9 +15,6 @@ module.exports = (knex) => {
   });
 
   router.get("/:id", (req, res) => {
-
-    console.log("at the router");
-
     knex
       .select("*")
       .from("maps")

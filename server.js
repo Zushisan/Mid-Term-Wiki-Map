@@ -53,6 +53,11 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// Main page
+app.get("/main", (req, res) => {
+  res.render("main");
+});
+
 // Registration Form STILL REDIRECTS WHERE WE DONT WANT BUT WORKS
   app.post('/register', (req, res) => {
     let username = req.body.username;

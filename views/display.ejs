@@ -47,21 +47,22 @@
 
 
 
-      <p>Key 0 0: <% key[0][0].id; %></p>
-      <p>Key 0 0: <% key[0][0].lat; %></p>
-      <p>Key 0 0: <% key[0][0].long; %></p>
-      <p>Key 0 0: <% key[0][0].title; %></p>
-      <p>Key 0 0: <% key[0][0].description; %></p>
-      <p>Key 0 0: <% key[0][0].img; %></p>
-      <p>Key 0 0: <% key[0][0].map_id; %></p>
+      <% key[0][0].id; %>
+      <% key[0][0].lat; %>
+      <% key[0][0].long; %>
+      <% key[0][0].title; %>
+      <% key[0][0].description; %>
+      <% key[0][0].img; %>
+      <% key[0][0].map_id; %>
 
-      <p>Key 0 0: <% key[1][0].id; %></p>
+      <% key[1][0].lat; %>
+      <% key[1][0].long; %>
 
-              <% var test = 101; %>
+<!--               <% var test = 101; %>
         <script>
            var getTest = <%= test  %>;  //var test is now assigned to getTest which will only work on browsers
            console.log(getTest);  // successfully prints 101 on browser
-        </script>
+        </script> -->
 
 
        <div id="map">
@@ -69,20 +70,16 @@
 
        </div>
     <script>
+      var markerObjectKey = <%-JSON.stringify(key[0])%>;
+      console.log(markerObjectKey)
 
-      var test = <%= key[0][0].lat %>;
-      var test2 = <%= key[0][0].long %>;
-      var testTitle = "<%= key[0][0].title %>";
-      var testDesc = "<%= key[0][0].description %>";
+      var mapLat = <%= key[1][0].lat %>;
+      var mapLng = <%= key[1][0].long %>;
 
-      // console.log(key[0])
-      // console.log("SEPARATIONS")
-      // console.log(key[0][0])
-      // Object with each markers info before request
       let markersInfo = {};
-// {lat: 43.6532, lng: -79.3832}
+
       var map;
-      var locationToronto = {lat: test, lng: test2};
+      var locationToronto = {lat: mapLat, lng: mapLng};
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: locationToronto,
@@ -95,21 +92,11 @@
           fullscreenControl: true
         });
 
-// To add a marker by default on the page
-         // var marker = new google.maps.Marker({
-         //   position: map.center,
-         //   map: map
-         // });
-         // map.panTo(marker.position);
-
-         // var latMarker = marker.getPosition().lat();
-         // var lngMarker = marker.getPosition().lng();
-
 
 //To get the coordinates of the canter of the map location
 
          var lat = map.getCenter().lat();
-         var lng =  map.getCenter().lng();
+         var lng = map.getCenter().lng();
 
 
          // console.log("Map:", lat, lng);
@@ -155,13 +142,7 @@
         function placeMarker(location, title, description) {
 
           var dieRoll = Math.floor(Math.random() * 1000000) +1;
-            // var markerLabel='GO!';
-            // var markerIcon = {
-            //               url: 'http://image.flaticon.com/icons/svg/252/252025.svg',
-            //               scaledSize: new google.maps.Size(80, 80),
-            //               origin: new google.maps.Point(0, 0),
-            //               anchor: new google.maps.Point(32,65)
-            //             };
+
 
 
             var markerNew = new google.maps.Marker({
@@ -189,49 +170,7 @@
 // `#${markerNew.id}`,
             $(() => {
 
-// <<<<<<< HEAD
-//             $('body').on('click',  `#${markerNew.id}`,".markerEdit", function(event) {
 
-//               console.log(markerNew.id);
-
-//               // let pointID = $(this).parents('div:first').attr('id');
-//               // let pointVar = $(`#${pointID}`);
-
-//               // let $wholeMarker = $(this).parent().parent();
-//               let titleValue = $(this).find(".spanTitle").text();
-
-//               let descriptionValue = $(this).find(".spanDescription").text();
-
-//               // var get = document.getElementById(pointID);
-
-//              $(this).find(".spanTitle").text('');
-
-//               $(this).find(".spanDescription").text('');
-
-//               $(this).find('.spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
-//               $(this).find('.spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
-
-//               $(this).find('.markerEdit').remove();
-//               $(this).append(`<button class="markerConfirm"> Confirm </button>`);
-
-//               $('body').on('click',`#${markerNew.id}`, ".markerConfirm", function(event){
-
-//                 $(this).find('.markerConfirm').remove();
-
-//                 // let $wholeConfirm = $(this).parent().parent();
-//                 let newValue = $(this).find(".inputValue").val();
-//                 let newValueDesc = $(this).find(".inputValueDesc").val();
-
-//                 console.log(newValue, newValueDesc);
-
-//                 $(this).find('.inputValue').remove();
-//                 $(this).find('.inputValueDesc').remove();
-//                 $(this).find('.markerConfirm').remove();
-//                 $(this).find('.spanTitle').append(newValue);
-//                 $(this).find('.spanDescription').append(newValueDesc);
-//                 $(this).find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
-
-// =======
             $('body').on('click', `#${markerNew.id} .markerEdit`, function(event) {
 
 
@@ -308,12 +247,19 @@
             // console.log(markersInfo);
     }
 
-    // let markerKey = <%= key %>;
-    // var testTitle = <%= key[0][0].title %>;
-    //   var testDesc = <%= key[0][0].description %>;
 
 
-   placeMarker({lat: test, lng: test2}, testTitle, testDesc)
+      for(let i = 0; i < markerObjectKey.length; i++){
+
+        var markerLat =  markerObjectKey[i].lat;
+        var markerLong = markerObjectKey[i].long;
+        var testTitle = markerObjectKey[i].title;
+        var testDesc = markerObjectKey[i].description;
+
+
+        placeMarker({lat: Number(markerLat), lng: Number(markerLong)}, testTitle, testDesc)
+      }
+
 
 
  }

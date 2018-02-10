@@ -50,7 +50,9 @@ app.use("/maps", mapsRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  // passing the cookie to index
+  let templateVars = {cookie: req.session.user_id};
+  res.render("index", templateVars);
 });
 
 // Main page
@@ -58,10 +60,12 @@ app.get("/main", (req, res) => {
   res.render("main");
 });
 
-// All maps page
 app.get("/all", (req, res) => {
   res.render("all");
 });
+
+
+
 
 // Registration Form STILL REDIRECTS WHERE WE DONT WANT BUT WORKS
   app.post('/register', (req, res) => {

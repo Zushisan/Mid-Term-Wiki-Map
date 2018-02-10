@@ -14,9 +14,9 @@ module.exports = (knex) => {
     });
   });
 
-  router.post("/4/maps", (req, res) => {
+  router.post("/:id/maps", (req, res) => {
 
-    // console.log(req.body)
+    console.log(req.body)
     // Map database entry
     let mapTitle = req.body.title;
     let mapLat = req.body.mapObject.lat.toString();
@@ -25,11 +25,11 @@ module.exports = (knex) => {
     let mapUserID = 4;
 
     //points database entry
-    let markersCoord = req.body.markersCoord;
+    let markersInfo = req.body.markersInfo;
     // let markerLat = '';
     // let markerLng = '';
-    let markerTitle = "All the markers title";
-    let markerDescription = "I am a marker description";
+    // let markerTitle = "All the markers title";
+    // let markerDescription = "I am a marker description";
     let markerImg = "I am an img ???";
 
     knex('maps')
@@ -37,13 +37,14 @@ module.exports = (knex) => {
       .insert({lat: mapLat, long: mapLng, title: mapTitle, category: mapCategory, user_id: mapUserID})
       .then((mapID) => {
         let markersInsert = [];
-        for(let markerObject of markersCoord){
+        for(let markerKey in markersInfo){
+          let markerObject = markersInfo[markerKey];
           let futurMarkerObject = {}
 
           futurMarkerObject.lat = markerObject.latMarkerNew.toString();
           futurMarkerObject.long = markerObject.lngMarkerNew.toString();
-          futurMarkerObject.title = markerTitle;
-          futurMarkerObject.description = markerDescription;
+          futurMarkerObject.title = markerObject.newValue;
+          futurMarkerObject.description = markerObject.newValueDesc;
           futurMarkerObject.img = markerImg;
           futurMarkerObject.map_id = mapID[0].id;
 

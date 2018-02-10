@@ -17,21 +17,23 @@ module.exports = (knex) => {
   router.get("/:id", (req, res) => {
     knex
       .select("*")
-      .from("maps")
-      .where("id", req.params.id)
+      .from("points")
+      .where("map_id", req.params.id)
       .then((results) => {
-        res.json(results);
+        let resultArray = [];
+        resultArray.push(results);
+        return knex
+          .select("*")
+          .from("maps")
+          .where("id", req.params.id)
+          .then((results) =>{
+            resultArray.push(results);
+            res.json(resultArray);
+          });
     });
   });
 
-  //   router.get("/user", (req, res) => {
-  //   knex
-  //     .select("*")
-  //     .from("users")
-  //     .then((results) => {
-  //       res.json(results);
-  //   });
-  // });
-
   return router;
 }
+
+

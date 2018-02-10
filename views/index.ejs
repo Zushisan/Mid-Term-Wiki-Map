@@ -3,8 +3,13 @@
   <head>
     <title>WIKI MAP</title>
 
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+
 
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
@@ -25,6 +30,7 @@
   </head>
 
   <body>
+
 
       <section>
         <!-- <form method="GET" action="/maps"> -->
@@ -137,6 +143,11 @@
             //             };
 
 
+
+
+
+
+
             var markerNew = new google.maps.Marker({
             position: location,
             animation: google.maps.Animation.DROP,
@@ -188,9 +199,7 @@
                 $('.whole-button .spanDescription').append(newValueDesc);
                 $('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
 
-
               });
-
             });
 
             console.log(latMarkerNew, lngMarkerNew);

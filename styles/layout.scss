@@ -3,9 +3,45 @@ body {
 
   h1 {
     color: #244751;
+  },
+
+  h4 {
+    text-decoration: underline;
   }
 }
 
+.categoriesTop div {
+  padding: 5px;
+  margin: 10px;
+  width: 20%;
+  height: 35vh;
+  background-color: #ccc;
+  border: 1px solid #900;
+  float: left;
+  text-align: center;
 
+}
 
+.categoriesBot div {
+  padding: 5px;
+  margin: 10px;
+  width: 20%;
+  height: 35vh;
+  background-color: #ccc;
+  border: 1px solid #900;
+  float: left;
+  text-align: center;
+
+}
+
+.nav {
+  background-color: #eee;
+  border: 1px solid #900;
+  padding: 10px;
+}
+
+.map-button {
+  display: block;
+  margin: auto;
+}
 

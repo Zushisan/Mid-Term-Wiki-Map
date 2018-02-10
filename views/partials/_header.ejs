@@ -2,9 +2,15 @@
 
   <!-- add nav bar include home, login, logout , user info button -->
    <nav id="nav-bar">
+    <div class="nav">
       <!-- home -->
-      <button class='toHome' type='button'>HOME</button>
+          <form action='/' method='GET'>
+            <button>Home</button>
+          </form>
       <!-- login -->
+          <form action='/main' method='GET'>
+            <button>Main Page</button>
+          </form>
 
 
         <form class='login' action='/login' method='POST'>
@@ -27,6 +33,6 @@
 
 
      <button class='toUserPro' type='button'>USER PROFILE</button>
-
+   </div>
    </nav>
 

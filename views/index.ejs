@@ -127,7 +127,10 @@
 
         });
 
+
         function placeMarker(location) {
+
+          var dieRoll = Math.floor(Math.random() * 1000000) +1;
             // var markerLabel='GO!';
             // var markerIcon = {
             //               url: 'http://image.flaticon.com/icons/svg/252/252025.svg',
@@ -142,7 +145,7 @@
             animation: google.maps.Animation.DROP,
             map: map,
             icon: icon,
-            // label: markerLabel
+            id: dieRoll
              });
 
             var latMarkerNew = markerNew.getPosition().lat();
@@ -151,7 +154,7 @@
 
 
              var contentString =
-            `<div class="whole-button">
+            `<div class="whole-button" id="${markerNew.id}">
                 <img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">
                 <p class="markerTitle"><b>Title:</b><span class="spanTitle"> No.1</span></p>
                 <div id="bodyContent">
@@ -159,39 +162,63 @@
                 </div>
                 <button class="markerEdit"> Edit me </button>
             </div>`;
+// `#${markerNew.id}`,
+            $(() => {
 
-            $('body').on('click', '.markerEdit', function(event) {
+            $('body').on('click', `#${markerNew.id} .markerEdit`, function(event) {
+              // $(this).find('.markerConfirm').remove();
+              console.log(markerNew.id);
+              console.log($(this));
 
-              let $wholeMarker = $(this).parent().parent();
-              let titleValue = $wholeMarker.find(".spanTitle").text();
-              let descriptionValue = $wholeMarker.find(".spanDescription").text();
+              let varParent  = $(this).parent();
 
-              $wholeMarker.find(".spanTitle").text('');
-              $wholeMarker.find(".spanDescription").text('');
-              $('.whole-button .spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
-              $('.whole-button .spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
+              // let pointID = $(this).parents('div:first').attr('id');
+              // let pointVar = $(`#${pointID}`);
 
-              $('.markerEdit').remove();
-              $('.whole-button').append(`<button class="markerConfirm"> Confirm </button>`);
+              // let $wholeMarker = $(this).parent().parent();
+              let titleValue = varParent.find(".spanTitle").text();
 
-              $('body').on('click', '.markerConfirm', function(event){
-                $('.markerEdit').remove();
+              let descriptionValue = varParent.find(".spanDescription").text();
 
-                let $wholeConfirm = $(this).parent().parent();
-                let newValue = $wholeConfirm.find(".inputValue").val();
-                let newValueDesc = $wholeConfirm.find(".inputValueDesc").val();
+              // var get = document.getElementById(pointID);
 
-                $('.inputValue').remove();
-                $('.inputValueDesc').remove();
-                $('.markerConfirm').remove();
-                $('.whole-button .spanTitle').append(newValue);
-                $('.whole-button .spanDescription').append(newValueDesc);
-                $('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
+             varParent.find(".spanTitle").text('');
+
+              varParent.find(".spanDescription").text('');
+
+              varParent.find('.spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
+              varParent.find('.spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
+
+              varParent.find('.markerEdit').remove();
+              varParent.append(`<button class="markerConfirm"> Confirm </button>`);
+
+
+
+              $('body').on('click',`#${markerNew.id} .markerConfirm`, function(event){
+
+                let varConfirmParent  = $(this).parent();
+
+                varConfirmParent.find('.markerConfirm').remove();
+
+                // let $wholeConfirm = $(this).parent().parent();
+                let newValue = varConfirmParent.find(".inputValue").val();
+                let newValueDesc = varConfirmParent.find(".inputValueDesc").val();
+
+                // console.log(newValue, newValueDesc);
+
+                varConfirmParent.find('.inputValue').remove();
+                varConfirmParent.find('.inputValueDesc').remove();
+                varConfirmParent.find('.markerConfirm').remove();
+                varConfirmParent.find('.spanTitle').append(newValue);
+                varConfirmParent.find('.spanDescription').append(newValueDesc);
+                varConfirmParent.parent().find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
 
 
               });
 
             });
+
+          });
 
             console.log(latMarkerNew, lngMarkerNew);
 

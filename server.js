@@ -75,15 +75,19 @@ let templateVars = {};
       .then((results) => {
         let resultArray = [];
         resultArray.push(results);
+        console.log(req.param.id);
         return knex
           .select("*")
           .from("maps")
           .where("id", req.params.id)
           .then((results) =>{
             resultArray.push(results);
-            console.log(resultArray[0][0].id);
+
+
             templateVars.key = resultArray;
             // console.log(templateVars);
+
+            console.log("checking templatevars:", templateVars.key)
 
       res.render("display", templateVars);
       });

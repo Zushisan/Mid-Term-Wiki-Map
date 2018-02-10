@@ -107,6 +107,8 @@
               let title = $(this).serialize();
               title = title.slice(10);
 
+
+
               $.ajax({
                 method: "POST",
                 url: `api/users/4/maps`,
@@ -133,6 +135,8 @@
 
         function placeMarker(location) {
 
+
+
           var dieRoll = Math.floor(Math.random() * 1000000) +1;
             // var markerLabel='GO!';
             // var markerIcon = {
@@ -151,9 +155,15 @@
             id: dieRoll
              });
 
+
+
             var latMarkerNew = markerNew.getPosition().lat();
             var lngMarkerNew = markerNew.getPosition().lng();
             // console.log("Marker:", latMarkerNew, lngMarkerNew );
+
+            let coordObject = {latMarkerNew, lngMarkerNew, newValue:"No.1", newValueDesc:"The best restaurant in Toronto"}
+
+            markersInfo[markerNew.id] = coordObject;
 
 
              var contentString =
@@ -260,10 +270,12 @@
                 varConfirmParent.find('.spanTitle').append(newValue);
                 varConfirmParent.find('.spanDescription').append(newValueDesc);
                 varConfirmParent.parent().find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
-// >>>>>>> 15ff73e9889bca02637e56f56d2e4cd40f0af6e0
-                let coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}
+
+                coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}
+
+
+
                 markersInfo[markerNew.id] = coordObject;
-                console.log(markersInfo);
 
               });
 

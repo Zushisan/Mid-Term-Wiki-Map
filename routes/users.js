@@ -16,7 +16,7 @@ module.exports = (knex) => {
 
   router.post("/:id/maps", (req, res) => {
 
-    console.log(req.body)
+    // console.log(req.body)
     // Map database entry
     let mapTitle = req.body.title;
     let mapLat = req.body.mapObject.lat.toString();

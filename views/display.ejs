@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
       <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-
+      <script type="text/javascript" src="/scripts/app.js"></script>
 
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
@@ -47,6 +47,22 @@
 
 
 
+      <p>Key 0 0: <% key[0][0].id; %></p>
+      <p>Key 0 0: <% key[0][0].lat; %></p>
+      <p>Key 0 0: <% key[0][0].long; %></p>
+      <p>Key 0 0: <% key[0][0].title; %></p>
+      <p>Key 0 0: <% key[0][0].description; %></p>
+      <p>Key 0 0: <% key[0][0].img; %></p>
+      <p>Key 0 0: <% key[0][0].map_id; %></p>
+
+      <p>Key 0 0: <% key[0][1].id; %></p>
+
+              <% var test = 101; %>
+        <script>
+           var getTest = <%= test  %>;  //var test is now assigned to getTest which will only work on browsers
+           console.log(getTest);  // successfully prints 101 on browser
+        </script>
+
 
        <div id="map">
 
@@ -54,11 +70,19 @@
        </div>
     <script>
 
+      var test = <%= key[0][0].lat %>;
+      var test2 = <%= key[0][0].long %>;
+      var testTitle = "<%= key[0][0].title %>";
+      var testDesc = "<%= key[0][0].description %>";
+
+      // console.log(key[0])
+      // console.log("SEPARATIONS")
+      // console.log(key[0][0])
       // Object with each markers info before request
       let markersInfo = {};
-
+// {lat: 43.6532, lng: -79.3832}
       var map;
-      var locationToronto = {lat: 43.6532, lng: -79.3832};
+      var locationToronto = {lat: test, lng: test2};
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: locationToronto,
@@ -128,7 +152,7 @@
         });
 
 
-        function placeMarker(location) {
+        function placeMarker(location, title, description) {
 
           var dieRoll = Math.floor(Math.random() * 1000000) +1;
             // var markerLabel='GO!';
@@ -156,9 +180,9 @@
              var contentString =
             `<div class="whole-button" id="${markerNew.id}">
                 <img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">
-                <p class="markerTitle"><b>Title:</b><span class="spanTitle"> No.1</span></p>
+                <p class="markerTitle"><b>Title:</b><span class="spanTitle">${title}</span></p>
                 <div id="bodyContent">
-                  <p><b>Description:</b><span class="spanDescription">The best restaurant in Toronto</span></b></p>
+                  <p><b>Description:</b><span class="spanDescription">${description}</span></b></p>
                 </div>
                 <button class="markerEdit"> Edit me </button>
             </div>`;
@@ -283,6 +307,12 @@
             // markersInfo[markerNew.id] = coordObject;
             // console.log(markersInfo);
     }
+
+    // let markerKey = <%= key %>;
+    // var testTitle = <%= key[0][0].title %>;
+    //   var testDesc = <%= key[0][0].description %>;
+   placeMarker({lat: test, lng: test2}, testTitle, testDesc)
+
 
  }
 

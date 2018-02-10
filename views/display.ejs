@@ -56,6 +56,7 @@
 
       var mapLat = <%= key[1][0].lat %>;
       var mapLng = <%= key[1][0].long %>;
+      var mapID = <%= key[1][0].id %>;
 
       let markersInfo = {};
 
@@ -120,7 +121,7 @@
         });
 
 
-        function placeMarker(location, title, description) {
+        function placeMarker(location, title, description, attrID) {
 
           var dieRoll = Math.floor(Math.random() * 1000000) +1;
 
@@ -131,7 +132,8 @@
             animation: google.maps.Animation.DROP,
             map: map,
             icon: icon,
-            id: dieRoll
+            id: dieRoll,
+            attrID: attrID
              });
 
             var latMarkerNew = markerNew.getPosition().lat();
@@ -140,7 +142,7 @@
 
 
              var contentString =
-            `<div class="whole-button" id="${markerNew.id}">
+            `<div class="whole-button" id="${markerNew.id}" data-attr-id="${attrID}">
                 <img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">
                 <p class="markerTitle"><b>Title:</b><span class="spanTitle">${title}</span></p>
                 <div id="bodyContent">
@@ -223,6 +225,32 @@
               infowindow.open(map, markerNew);
             });
 
+            //--NEW
+            markerNew.addListener('dblclick', function() {
+              //We need the MAP ID and the POINT ID
+
+            if(markerNew.attrID){
+            $(() => {
+                $.ajax({
+                  method: "DELETE",
+                  url: `/maps/${mapID}/points/${markerNew.attrID}`,
+                  data: {mapID, pointID: markerNew.attrID}
+                }).done((res) => {
+
+                  markerNew.setMap(null);
+                  delete markersInfo[markerNew.id];
+
+                  });
+                });
+              } else {
+                markerNew.setMap(null);
+                delete markersInfo[markerNew.id];
+
+              }
+
+              // console.log(markersInfo);
+            });
+
             // let coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}
             // markersInfo[markerNew.id] = coordObject;
             // console.log(markersInfo);
@@ -236,9 +264,10 @@
         var markerLong = markerObjectKey[i].long;
         var testTitle = markerObjectKey[i].title;
         var testDesc = markerObjectKey[i].description;
+        var attrIDVar = markerObjectKey[i].id;
 
 
-        placeMarker({lat: Number(markerLat), lng: Number(markerLong)}, testTitle, testDesc)
+        placeMarker({lat: Number(markerLat), lng: Number(markerLong)}, testTitle, testDesc, attrIDVar)
       }
 
 

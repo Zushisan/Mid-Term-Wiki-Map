@@ -33,7 +33,22 @@ module.exports = (knex) => {
     });
   });
 
+    router.delete("/:id/points/:id", (req, res) => {
+      console.log(req.body.mapID);
+      console.log(req.body.pointID);
+
+
+      knex('points')
+      .where('id', req.body.pointID)
+      .delete()
+      .then((result) => {
+        res.json(result);
+      });
+
+  });
+
   return router;
 }
+
 
 

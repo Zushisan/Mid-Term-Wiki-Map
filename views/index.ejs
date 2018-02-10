@@ -169,47 +169,97 @@
 // `#${markerNew.id}`,
             $(() => {
 
-            $('body').on('click',  `#${markerNew.id}`,".markerEdit", function(event) {
+// <<<<<<< HEAD
+//             $('body').on('click',  `#${markerNew.id}`,".markerEdit", function(event) {
 
+//               console.log(markerNew.id);
+
+//               // let pointID = $(this).parents('div:first').attr('id');
+//               // let pointVar = $(`#${pointID}`);
+
+//               // let $wholeMarker = $(this).parent().parent();
+//               let titleValue = $(this).find(".spanTitle").text();
+
+//               let descriptionValue = $(this).find(".spanDescription").text();
+
+//               // var get = document.getElementById(pointID);
+
+//              $(this).find(".spanTitle").text('');
+
+//               $(this).find(".spanDescription").text('');
+
+//               $(this).find('.spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
+//               $(this).find('.spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
+
+//               $(this).find('.markerEdit').remove();
+//               $(this).append(`<button class="markerConfirm"> Confirm </button>`);
+
+//               $('body').on('click',`#${markerNew.id}`, ".markerConfirm", function(event){
+
+//                 $(this).find('.markerConfirm').remove();
+
+//                 // let $wholeConfirm = $(this).parent().parent();
+//                 let newValue = $(this).find(".inputValue").val();
+//                 let newValueDesc = $(this).find(".inputValueDesc").val();
+
+//                 console.log(newValue, newValueDesc);
+
+//                 $(this).find('.inputValue').remove();
+//                 $(this).find('.inputValueDesc').remove();
+//                 $(this).find('.markerConfirm').remove();
+//                 $(this).find('.spanTitle').append(newValue);
+//                 $(this).find('.spanDescription').append(newValueDesc);
+//                 $(this).find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
+
+// =======
+            $('body').on('click', `#${markerNew.id} .markerEdit`, function(event) {
+              // $(this).find('.markerConfirm').remove();
               console.log(markerNew.id);
+              console.log($(this));
+
+              let varParent  = $(this).parent();
 
               // let pointID = $(this).parents('div:first').attr('id');
               // let pointVar = $(`#${pointID}`);
 
               // let $wholeMarker = $(this).parent().parent();
-              let titleValue = $(this).find(".spanTitle").text();
+              let titleValue = varParent.find(".spanTitle").text();
 
-              let descriptionValue = $(this).find(".spanDescription").text();
+              let descriptionValue = varParent.find(".spanDescription").text();
 
               // var get = document.getElementById(pointID);
 
-             $(this).find(".spanTitle").text('');
+             varParent.find(".spanTitle").text('');
 
-              $(this).find(".spanDescription").text('');
+              varParent.find(".spanDescription").text('');
 
-              $(this).find('.spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
-              $(this).find('.spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
+              varParent.find('.spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
+              varParent.find('.spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
 
-              $(this).find('.markerEdit').remove();
-              $(this).append(`<button class="markerConfirm"> Confirm </button>`);
+              varParent.find('.markerEdit').remove();
+              varParent.append(`<button class="markerConfirm"> Confirm </button>`);
 
-              $('body').on('click',`#${markerNew.id}`, ".markerConfirm", function(event){
 
-                $(this).find('.markerConfirm').remove();
+
+              $('body').on('click',`#${markerNew.id} .markerConfirm`, function(event){
+
+                let varConfirmParent  = $(this).parent();
+
+                varConfirmParent.find('.markerConfirm').remove();
 
                 // let $wholeConfirm = $(this).parent().parent();
-                let newValue = $(this).find(".inputValue").val();
-                let newValueDesc = $(this).find(".inputValueDesc").val();
+                let newValue = varConfirmParent.find(".inputValue").val();
+                let newValueDesc = varConfirmParent.find(".inputValueDesc").val();
 
-                console.log(newValue, newValueDesc);
+                // console.log(newValue, newValueDesc);
 
-                $(this).find('.inputValue').remove();
-                $(this).find('.inputValueDesc').remove();
-                $(this).find('.markerConfirm').remove();
-                $(this).find('.spanTitle').append(newValue);
-                $(this).find('.spanDescription').append(newValueDesc);
-                $(this).find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
-
+                varConfirmParent.find('.inputValue').remove();
+                varConfirmParent.find('.inputValueDesc').remove();
+                varConfirmParent.find('.markerConfirm').remove();
+                varConfirmParent.find('.spanTitle').append(newValue);
+                varConfirmParent.find('.spanDescription').append(newValueDesc);
+                varConfirmParent.parent().find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
+// >>>>>>> 15ff73e9889bca02637e56f56d2e4cd40f0af6e0
 
               });
 

@@ -60,6 +60,9 @@
       // Object with each markers info before request
       let markersInfo = {};
 
+//New
+      let markers = [];
+
       var map;
       var locationToronto = {lat: 43.6532, lng: -79.3832};
       function initMap() {
@@ -130,6 +133,8 @@
 
          placeMarker(event.latLng);
 
+
+
         });
 
 
@@ -154,6 +159,9 @@
             icon: icon,
             id: dieRoll
              });
+
+//New
+            markers.push(markerNew);
 
 
 
@@ -277,6 +285,8 @@
 
                 markersInfo[markerNew.id] = coordObject;
 
+                console.log(markersInfo);
+
               });
 
             });
@@ -292,6 +302,16 @@
             markerNew.addListener('click', function() {
 
               infowindow.open(map, markerNew);
+            });
+
+//--NEW
+            markerNew.addListener('dblclick', function() {
+
+              markerNew.setMap(null);
+
+              markersInfo[markerNew.id] = null;
+
+              console.log(markersInfo);
             });
 
             // let coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}

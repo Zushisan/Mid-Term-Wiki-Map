@@ -64,21 +64,21 @@ app.get("/all", (req, res) => {
   res.render("all");
 });
 
-app.post("/display", (req, res) => {
+app.get("/display/:id", (req, res) => {
 
 let templateVars = {};
 // console.log("this in display req: ", req.body);
     knex
       .select("*")
       .from("points")
-      .where("map_id", req.body.id)
+      .where("map_id", req.params.id)
       .then((results) => {
         let resultArray = [];
         resultArray.push(results);
         return knex
           .select("*")
           .from("maps")
-          .where("id", req.body.id)
+          .where("id", req.params.id)
           .then((results) =>{
             resultArray.push(results);
             console.log(resultArray[0][0].id);

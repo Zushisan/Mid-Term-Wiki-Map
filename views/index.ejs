@@ -87,8 +87,7 @@
 
 //To get the coordinates of the canter of the map location
 
-         var lat = map.getCenter().lat();
-         var lng =  map.getCenter().lng();
+
 
 
          // console.log("Map:", lat, lng);
@@ -101,6 +100,9 @@
 
         $(() => {
           $(".newmap").on('submit', function (event){
+
+                 var lat = map.getCenter().lat();
+                 var lng =  map.getCenter().lng();
 
 
               let mapObject = {lat, lng};

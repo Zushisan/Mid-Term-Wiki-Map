@@ -38,6 +38,10 @@
 
 
 
+       <form class="EditMap">
+        <button type="submit">Save Edited Map</button>
+      </form>
+
 
        <div id="map">
 
@@ -45,7 +49,7 @@
        </div>
     <script>
       var markerObjectKey = <%-JSON.stringify(key[0])%>;
-      console.log(markerObjectKey)
+      // console.log(markerObjectKey)
 
       var mapLat = <%= key[1][0].lat %>;
       var mapLng = <%= key[1][0].long %>;
@@ -82,39 +86,43 @@
          // console.log("Map:", lat, lng, "Marker:", latMarker, lngMarker );
 
 
-        $(() => {
-          $(".newmap").on('submit', function (event){
 
+          $(() => {
 
-              let mapObject = {lat, lng};
-              let title = $(this).serialize();
-              title = title.slice(10);
+            $(".EditMap").on('submit', function (event){
+            let mapObject = {lat, lng};
+                $.ajax({
+                  method: "POST",
+                  url: `/maps/${mapID}/edit`,
+                  data: {mapID, mapObject, markersInfo}
+                }).done((res) => {
+                  console.log(res, " SUCCESS");
+                  // console.log(markersInfo);
+                  // delete markersInfo[markerNew.id];
 
-              $.ajax({
-                method: "POST",
-                url: `api/users/4/maps`,
-                data: {title, mapObject, markersInfo}
-              }).done((map) => {
-                  console.log(map, " SUCCESS");
+                  });
+                event.preventDefault();
               });
-              event.preventDefault();
-            });
+           });
 
-        });
+
 
 // to get marker location and console log the lat and lng
 
-        var icon = "http://maps.google.com/mapfiles/kml/pal2/icon32.png";
+        var icon = "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Ball-Right-Azure-icon.png";
 
         google.maps.event.addListener(map, 'click', function(event) {
 
 
-         placeMarker(event.latLng);
+         placeMarker(event.latLng, "Enter Title", "Enter Description", undefined, "http://maps.gstatic.com/mapfiles/ms2/micons/camera.png");
+
+
+
 
         });
 
 
-        function placeMarker(location, title, description, attrID) {
+        function placeMarker(location, title, description, attrID, markerImage) {
 
           var dieRoll = Math.floor(Math.random() * 1000000) +1;
 
@@ -133,10 +141,21 @@
             var lngMarkerNew = markerNew.getPosition().lng();
             // console.log("Marker:", latMarkerNew, lngMarkerNew );
 
+            console.log(markerNew);
+
+            if ( attrID === undefined ){
+
+              let coordObject = {latMarkerNew, lngMarkerNew, newValue:"Please enter Title", newValueDesc:"Please enter description",newValueImage: "http://maps.gstatic.com/mapfiles/ms2/micons/camera.png"}
+
+               markersInfo[markerNew.id] = coordObject;
+            }
+
+
+
 
              var contentString =
-            `<div class="whole-button" id="${markerNew.id}" data-attr-id="${attrID}">
-                <img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">
+            `<img class="image" src="${markerImage}">
+            <div class="whole-button" id="${markerNew.id}" data-attr-id="${attrID}">
                 <p class="markerTitle"><b>Title:</b><span class="spanTitle">${title}</span></p>
                 <div id="bodyContent">
                   <p><b>Description:</b><span class="spanDescription">${description}</span></b></p>
@@ -151,8 +170,8 @@
 
 
               // $(this).find('.markerConfirm').remove();
-              console.log(markerNew.id);
-              console.log($(this));
+              // console.log(markerNew.id);
+              // console.log($(this));
 
               let varParent  = $(this).parent();
 
@@ -176,6 +195,8 @@
               varParent.find('.markerEdit').remove();
               varParent.append(`<button class="markerConfirm"> Confirm </button>`);
 
+              varParent.parent().children('div:first').prepend(`<p class="imageUpdate"><b>Update Image (add image) </b>:<input type="text" class="imageInput" value=""><p>`)
+
 
 
               $('body').on('click',`#${markerNew.id} .markerConfirm`, function(event){
@@ -187,6 +208,7 @@
                 // let $wholeConfirm = $(this).parent().parent();
                 let newValue = varConfirmParent.find(".inputValue").val();
                 let newValueDesc = varConfirmParent.find(".inputValueDesc").val();
+                let newValueImage = varConfirmParent.find(".imageInput").val();
 
                 // console.log(newValue, newValueDesc);
 
@@ -194,12 +216,17 @@
                 varConfirmParent.find('.inputValueDesc').remove();
                 varConfirmParent.find('.markerConfirm').remove();
                 varConfirmParent.find('.spanTitle').append(newValue);
+                varConfirmParent.find('.imageUpdate').remove();
                 varConfirmParent.find('.spanDescription').append(newValueDesc);
+                varConfirmParent.parent().children('img:first').attr('src', '');
+                varConfirmParent.parent().children('img:first').attr('src', newValueImage);
                 varConfirmParent.parent().find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
 // >>>>>>> 15ff73e9889bca02637e56f56d2e4cd40f0af6e0
-                let coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}
+                let coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc, newValueImage}
                 markersInfo[markerNew.id] = coordObject;
-                console.log(markersInfo);
+                // console.log(markersInfo);
+
+
 
               });
 
@@ -222,7 +249,7 @@
             markerNew.addListener('dblclick', function() {
               //We need the MAP ID and the POINT ID
 
-            if(markerNew.attrID){
+            if(markerNew.attrID !== undefined){
             $(() => {
                 $.ajax({
                   method: "DELETE",
@@ -231,13 +258,16 @@
                 }).done((res) => {
 
                   markerNew.setMap(null);
-                  delete markersInfo[markerNew.id];
+                  // console.log(markersInfo);
+                  // delete markersInfo[markerNew.id];
 
                   });
                 });
               } else {
                 markerNew.setMap(null);
+                console.log(markersInfo);
                 delete markersInfo[markerNew.id];
+                console.log(markersInfo);
 
               }
 
@@ -258,10 +288,13 @@
         var testTitle = markerObjectKey[i].title;
         var testDesc = markerObjectKey[i].description;
         var attrIDVar = markerObjectKey[i].id;
+        var markerImage = markerObjectKey[i].img;
 
 
-        placeMarker({lat: Number(markerLat), lng: Number(markerLong)}, testTitle, testDesc, attrIDVar)
+        placeMarker({lat: Number(markerLat), lng: Number(markerLong)}, testTitle, testDesc, attrIDVar, markerImage)
       }
+
+      // console.log(markersInfo);
 
 
 

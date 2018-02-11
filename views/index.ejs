@@ -57,6 +57,218 @@
           fullscreenControl: true
         });
 
+
+// To add a marker by default on the page
+         // var marker = new google.maps.Marker({
+         //   position: map.center,
+         //   map: map
+         // });
+         // map.panTo(marker.position);
+
+         // var latMarker = marker.getPosition().lat();
+         // var lngMarker = marker.getPosition().lng();
+
+
+//To get the coordinates of the canter of the map location
+
+
+
+
+         // console.log("Map:", lat, lng);
+
+
+// This is the event hanlder to Creat the map. It will basically send the map details and the coordinates etc on the map
+
+         // console.log("Map:", lat, lng, "Marker:", latMarker, lngMarker );
+
+
+        $(() => {
+          $(".newmap").on('submit', function (event){
+
+                 var lat = map.getCenter().lat();
+                 var lng =  map.getCenter().lng();
+
+
+              let mapObject = {lat, lng};
+              let title = $(this).serialize();
+              title = title.slice(10);
+
+
+
+              $.ajax({
+                method: "POST",
+                url: `api/users/4/maps`,
+                data: {title, mapObject, markersInfo}
+              }).done((map) => {
+                  console.log(map, " SUCCESS");
+              });
+              event.preventDefault();
+            });
+
+        });
+
+// to get marker location and console log the lat and lng
+
+        var icon = "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Ball-Right-Azure-icon.png";
+
+        google.maps.event.addListener(map, 'click', function(event) {
+
+
+         placeMarker(event.latLng);
+
+
+
+        });
+
+
+        function placeMarker(location) {
+
+
+
+          var dieRoll = Math.floor(Math.random() * 1000000) +1;
+            // var markerLabel='GO!';
+            // var markerIcon = {
+            //               url: 'http://image.flaticon.com/icons/svg/252/252025.svg',
+            //               scaledSize: new google.maps.Size(80, 80),
+            //               origin: new google.maps.Point(0, 0),
+            //               anchor: new google.maps.Point(32,65)
+            //             };
+
+
+            var markerNew = new google.maps.Marker({
+            position: location,
+            animation: google.maps.Animation.DROP,
+            map: map,
+            icon: icon,
+            id: dieRoll
+             });
+
+//New
+            markers.push(markerNew);
+
+
+
+            var latMarkerNew = markerNew.getPosition().lat();
+            var lngMarkerNew = markerNew.getPosition().lng();
+            // console.log("Marker:", latMarkerNew, lngMarkerNew );
+
+            let coordObject = {latMarkerNew, lngMarkerNew, newValue:"Please enter Title", newValueDesc:"Please enter description",newValueImage: "http://maps.gstatic.com/mapfiles/ms2/micons/camera.png"}
+
+            markersInfo[markerNew.id] = coordObject;
+
+
+             var contentString =
+            `<img class="image" src="http://maps.gstatic.com/mapfiles/ms2/micons/camera.png">
+            <div class="whole-button" id="${markerNew.id}">
+                <p class="markerTitle"><b>Title:</b><span class="spanTitle"> Please enter Title</span></p>
+                <div id="bodyContent">
+                  <p><b>Description:</b><span class="spanDescription">Please enter description</span></b></p>
+                </div>
+                <button class="markerEdit"> Edit me </button>
+            </div>`;
+// `#${markerNew.id}`,
+            $(() => {
+
+            $('body').on('click', `#${markerNew.id} .markerEdit`, function(event) {
+
+
+              let varParent  = $(this).parent();
+
+              // let pointID = $(this).parents('div:first').attr('id');
+              // let pointVar = $(`#${pointID}`);
+
+              // let $wholeMarker = $(this).parent().parent();
+              let titleValue = varParent.find(".spanTitle").text();
+
+              let descriptionValue = varParent.find(".spanDescription").text();
+
+              // var get = document.getElementById(pointID);
+
+             varParent.find(".spanTitle").text('');
+
+              varParent.find(".spanDescription").text('');
+
+              varParent.find('.spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
+              varParent.find('.spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
+
+              varParent.find('.markerEdit').remove();
+              varParent.append(`<button class="markerConfirm"> Confirm </button>`);
+
+              varParent.parent().children('div:first').prepend(`<p class="imageUpdate"><b>Update Image (add image) </b>:<input type="text" class="imageInput" value=""><p>`)
+
+              console.log(varParent.parent().children('img:first'));
+
+
+
+              $('body').on('click',`#${markerNew.id} .markerConfirm`, function(event){
+
+                let varConfirmParent  = $(this).parent();
+
+                varConfirmParent.find('.markerConfirm').remove();
+
+                // let $wholeConfirm = $(this).parent().parent();
+                let newValue = varConfirmParent.find(".inputValue").val();
+                let newValueDesc = varConfirmParent.find(".inputValueDesc").val();
+                let newValueImage = varConfirmParent.find(".imageInput").val();
+
+                console.log(newValueImage);
+
+                // console.log(newValue, newValueDesc);
+
+                varConfirmParent.find('.inputValue').remove();
+                varConfirmParent.find('.inputValueDesc').remove();
+                varConfirmParent.find('.markerConfirm').remove();
+                varConfirmParent.find('.imageUpdate').remove();
+                varConfirmParent.find('.spanTitle').append(newValue);
+                varConfirmParent.find('.spanDescription').append(newValueDesc);
+
+                if (newValueImage){
+                varConfirmParent.parent().children('img:first').attr('src', '');
+                varConfirmParent.parent().children('img:first').attr('src', newValueImage);
+                 }else{
+                  newValueImage = "http://maps.gstatic.com/mapfiles/ms2/micons/camera.png";
+                 }
+
+                varConfirmParent.parent().find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
+
+                coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc, newValueImage}
+
+
+
+                markersInfo[markerNew.id] = coordObject;
+
+              });
+
+            });
+
+          });
+
+            var infowindow = new google.maps.InfoWindow({
+              content: contentString,
+              maxWidth: 500
+            });
+
+
+            markerNew.addListener('click', function() {
+
+              infowindow.open(map, markerNew);
+            });
+
+//--NEW
+            markerNew.addListener('dblclick', function() {
+
+              markerNew.setMap(null);
+
+              delete markersInfo[markerNew.id] ;
+
+            });
+
+            // let coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}
+            // markersInfo[markerNew.id] = coordObject;
+            // console.log(markersInfo);
+    }
+
+
  }
 
 

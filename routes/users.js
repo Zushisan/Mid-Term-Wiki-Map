@@ -30,7 +30,7 @@ module.exports = (knex) => {
     // let markerLng = '';
     // let markerTitle = "All the markers title";
     // let markerDescription = "I am a marker description";
-    let markerImg = "I am an img ???";
+    //let markerImg = "I am an img ???";
 
     knex('maps')
       .returning(['id'])
@@ -45,7 +45,7 @@ module.exports = (knex) => {
           futurMarkerObject.long = markerObject.lngMarkerNew.toString();
           futurMarkerObject.title = markerObject.newValue;
           futurMarkerObject.description = markerObject.newValueDesc;
-          futurMarkerObject.img = markerImg;
+          futurMarkerObject.img = markerObject.newValueImage;
           futurMarkerObject.map_id = mapID[0].id;
 
           markersInsert.push(futurMarkerObject);
@@ -55,6 +55,7 @@ module.exports = (knex) => {
                 .returning(['id'])
                 .insert(markersInsert)
       }).then((results) => {
+
                 res.json(results)
             });
   });

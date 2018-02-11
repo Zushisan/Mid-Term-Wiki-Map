@@ -49,10 +49,17 @@ app.use("/api/users", usersRoutes(knex));
 app.use("/maps", mapsRoutes(knex));
 
 // Home page
-app.get("/", (req, res) => {
+app.get("/index", (req, res) => {
   // passing the cookie to index
   let templateVars = {cookie: req.session.user_id};
   res.render("index", templateVars);
+});
+
+// Home page
+app.get("/", (req, res) => {
+  // passing the cookie to index
+  let templateVars = {cookie: req.session.user_id};
+  res.render("main", templateVars);
 });
 
 // Main page

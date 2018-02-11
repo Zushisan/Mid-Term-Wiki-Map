@@ -15,24 +15,40 @@ module.exports = (knex) => {
   });
 
   router.get("/:id", (req, res) => {
-
     knex
       .select("*")
-      .from("maps")
-      .where("id", req.params.id)
+      .from("points")
+      .where("map_id", req.params.id)
       .then((results) => {
-        res.json(results);
+        let resultArray = [];
+        resultArray.push(results);
+        return knex
+          .select("*")
+          .from("maps")
+          .where("id", req.params.id)
+          .then((results) =>{
+            resultArray.push(results);
+            res.json(resultArray);
+          });
     });
   });
 
-  //   router.get("/user", (req, res) => {
-  //   knex
-  //     .select("*")
-  //     .from("users")
-  //     .then((results) => {
-  //       res.json(results);
-  //   });
-  // });
+    router.delete("/:id/points/:id", (req, res) => {
+      console.log(req.body.mapID);
+      console.log(req.body.pointID);
+
+
+      knex('points')
+      .where('id', req.body.pointID)
+      .delete()
+      .then((result) => {
+        res.json(result);
+      });
+
+  });
 
   return router;
 }
+
+
+

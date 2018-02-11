@@ -2,33 +2,42 @@
 
   <!-- add nav bar include home, login, logout , user info button -->
    <nav id="nav-bar">
-      <!-- home -->
-      <button class='toHome' type='button'>HOME</button>
-      <!-- login -->
+    <div class="nav">
+
+          <form action='/' method='GET'>
+            <button>Home</button>
+          </form>
+
+          <form action='/main' method='GET'>
+            <button>Main Page</button>
+          </form>
+
+          <form action='/all' method='GET'>
+            <button class="all-maps-button">All Maps</button>
+          </form>
+
 
 
         <form class='login' action='/login' method='POST'>
           <h2>LOGIN</h2>
           Username:<input name='username'>
-          Email:<input name='email' placeholder="name@example.com">
           Password:<input name='password'>
           <input type="submit" name="submitLogin" value="LOGIN">
         </form>
 
-    <!-- register -->
 
-          <form class='register' action='/user' method='POST'>
+
+          <form class='register' action='/register' method='POST'>
             <h2>REGISTER</h2>
             Username:<input name='username'>
-            Email:<input name='email' placeholder="name@example.com">
             Password:<input name='password'>
           <input type="submit" name="submitRegister" value="REGISTER">
           </form>
 
       <button class='toLogout' type='button'>LOGOUT</button>
 
-     <button class='toCreateMap' type='button' href='/'>CREATE MAP</button>
-     <button class='toUserPro' type='button'>USER PROFILE</button>
 
+     <button class='toUserPro' type='button'>USER PROFILE</button>
+   </div>
    </nav>
 

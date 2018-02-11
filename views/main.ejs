@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+      <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+      <script type="text/javascript" src="/scripts/app.js"></script>
+
+  </head>
+  <body>
+    <% include ./partials/_header %>
+
+
+  <main class="container">
+
+
+        <section>
+          <form method="GET" action="/maps">
+            <button type="submit" class="toronto">Best Restaurants in Toronto</button>
+          </form>
+        </section>
+
+        <div class="categoriesTop">
+
+          <div class="food"><h4>Food</h4><ul></ul></div>
+          <div class="movies"><h4>Movie</h4></div>
+          <div class="bars"><h4>Bar</h4></div>
+          <div class="hiking"><h4>Hiking</h4></div>
+
+        </div>
+        <div class="categoriesBot">
+
+          <div class="sport"><h4>Sport</h4></div>
+          <div class="stuff"><h4>Stuff</h4></div>
+          <div class="things"><h4>Thing</h4></div>
+          <div class="misc"><h4>Misc</h4></div>
+
+        </div>
+
+
+  </main>
+
+
+  </body>
+</html>

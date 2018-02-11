@@ -43,6 +43,11 @@
        </div>
     <script>
 
+      let markersInfo = {};
+
+//New
+     let markers = [];
+
       var map;
       var locationToronto = {lat: 43.6532, lng: -79.3832};
       function initMap() {
@@ -274,8 +279,14 @@
 
     </script>
 
-        <a href="/index"><button class='toCreateMap bottomButton col-xs-6 col-sm-6 col-md-6 col-lg-6' type="submit" >SAVE MAP</button></a>
-        <a href="/all"><button class='toSeeMap bottomButton col-xs-6 col-sm-6 col-md-6 col-lg-6' type="submit">ALL MAPS</button></a>
+
+
+    <form class="newmap" action="api/users/<%= cookie %>/maps” method="POST">
+       <input name="map-title" placeholder="Map Title" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 map-title-class">
+       <button class="toCreateMap bottomButton col-xs-3 col-sm-3 col-md-3 col-lg-3" type="submit">SAVE MAP</button>
+     </form>
+
+        <a href="/all"><button class='toSeeMap bottomButton col-xs-6 col-sm-6 col-md-6 col-lg-6' type="submit">MAPS</button></a>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtXOaqqDPKHhH2X8Oog8vYdwmqrQn7Lpc&callback=initMap"
     async defer>

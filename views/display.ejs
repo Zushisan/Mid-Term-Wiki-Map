@@ -6,17 +6,21 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
 
       <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
       <script type="text/javascript" src="/scripts/app.js"></script>
 
+
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
       #map {
-        height: 50%;
+        height: 70%;
+        margin: 10px;
+        border: 1px solid #4C3C1B;
+        padding: 5px;
+        background-color: #EFEECB;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -30,20 +34,9 @@
 
   <body>
 
-      <section>
-        <!-- <form method="GET" action="/maps"> -->
-          <button class= "toronto">Best Restaurants in Toronto</button>
-        <!-- </form> -->
-      </section>
 
 
-      <form>
-        Title<br>
-        <input type="text" name="title"><br>
-        Last name:<br>
-        <input type="text" name="Description">
-        <input type="submit" value="Submit">
-      </form>
+
 
 
        <div id="map">
@@ -276,6 +269,10 @@
 
 
     </script>
+          <div class='col-xs-3 col-sm-3 col-md-3 col-lg-3'> </div>
+          <a href="/index"><button class='toCreateMap bottomButton col-xs-6 col-sm-6 col-md-6 col-lg-6' type="submit" >EDIT MAP</button></a>
+          <div class='col-xs-3 col-sm-3 col-md-3 col-lg-3'> </div>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtXOaqqDPKHhH2X8Oog8vYdwmqrQn7Lpc&callback=initMap"
     async defer>
 

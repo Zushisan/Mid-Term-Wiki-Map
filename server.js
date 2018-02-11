@@ -71,6 +71,10 @@ app.get("/all", (req, res) => {
   res.render("all");
 });
 
+app.get("/profile", (req, res) => {
+  res.render("profile");
+});
+
 app.get("/display/:id", (req, res) => {
 
 let templateVars = {};

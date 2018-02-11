@@ -128,7 +128,7 @@
 
 // to get marker location and console log the lat and lng
 
-        var icon = "http://maps.google.com/mapfiles/kml/pal2/icon32.png";
+        var icon = "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Ball-Right-Azure-icon.png";
 
         google.maps.event.addListener(map, 'click', function(event) {
 
@@ -171,72 +171,25 @@
             var lngMarkerNew = markerNew.getPosition().lng();
             // console.log("Marker:", latMarkerNew, lngMarkerNew );
 
-            let coordObject = {latMarkerNew, lngMarkerNew, newValue:"No.1", newValueDesc:"The best restaurant in Toronto"}
+            let coordObject = {latMarkerNew, lngMarkerNew, newValue:"Please enter Title", newValueDesc:"Please enter description",newValueImage: "http://maps.gstatic.com/mapfiles/ms2/micons/camera.png"}
 
             markersInfo[markerNew.id] = coordObject;
 
 
              var contentString =
-            `<div class="whole-button" id="${markerNew.id}">
-                <img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">
-                <p class="markerTitle"><b>Title:</b><span class="spanTitle"> No.1</span></p>
+            `<img class="image" src="http://maps.gstatic.com/mapfiles/ms2/micons/camera.png">
+            <div class="whole-button" id="${markerNew.id}">
+                <p class="markerTitle"><b>Title:</b><span class="spanTitle"> Please enter Title</span></p>
                 <div id="bodyContent">
-                  <p><b>Description:</b><span class="spanDescription">The best restaurant in Toronto</span></b></p>
+                  <p><b>Description:</b><span class="spanDescription">Please enter description</span></b></p>
                 </div>
                 <button class="markerEdit"> Edit me </button>
             </div>`;
 // `#${markerNew.id}`,
             $(() => {
 
-// <<<<<<< HEAD
-//             $('body').on('click',  `#${markerNew.id}`,".markerEdit", function(event) {
-
-//               console.log(markerNew.id);
-
-//               // let pointID = $(this).parents('div:first').attr('id');
-//               // let pointVar = $(`#${pointID}`);
-
-//               // let $wholeMarker = $(this).parent().parent();
-//               let titleValue = $(this).find(".spanTitle").text();
-
-//               let descriptionValue = $(this).find(".spanDescription").text();
-
-//               // var get = document.getElementById(pointID);
-
-//              $(this).find(".spanTitle").text('');
-
-//               $(this).find(".spanDescription").text('');
-
-//               $(this).find('.spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
-//               $(this).find('.spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
-
-//               $(this).find('.markerEdit').remove();
-//               $(this).append(`<button class="markerConfirm"> Confirm </button>`);
-
-//               $('body').on('click',`#${markerNew.id}`, ".markerConfirm", function(event){
-
-//                 $(this).find('.markerConfirm').remove();
-
-//                 // let $wholeConfirm = $(this).parent().parent();
-//                 let newValue = $(this).find(".inputValue").val();
-//                 let newValueDesc = $(this).find(".inputValueDesc").val();
-
-//                 console.log(newValue, newValueDesc);
-
-//                 $(this).find('.inputValue').remove();
-//                 $(this).find('.inputValueDesc').remove();
-//                 $(this).find('.markerConfirm').remove();
-//                 $(this).find('.spanTitle').append(newValue);
-//                 $(this).find('.spanDescription').append(newValueDesc);
-//                 $(this).find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
-
-// =======
             $('body').on('click', `#${markerNew.id} .markerEdit`, function(event) {
 
-
-              // $(this).find('.markerConfirm').remove();
-              console.log(markerNew.id);
-              console.log($(this));
 
               let varParent  = $(this).parent();
 
@@ -260,6 +213,10 @@
               varParent.find('.markerEdit').remove();
               varParent.append(`<button class="markerConfirm"> Confirm </button>`);
 
+              varParent.parent().children('div:first').prepend(`<p class="imageUpdate"><b>Update Image (add image) </b>:<input type="text" class="imageInput" value=""><p>`)
+
+              console.log(varParent.parent().children('img:first'));
+
 
 
               $('body').on('click',`#${markerNew.id} .markerConfirm`, function(event){
@@ -271,23 +228,33 @@
                 // let $wholeConfirm = $(this).parent().parent();
                 let newValue = varConfirmParent.find(".inputValue").val();
                 let newValueDesc = varConfirmParent.find(".inputValueDesc").val();
+                let newValueImage = varConfirmParent.find(".imageInput").val();
+
+                console.log(newValueImage);
 
                 // console.log(newValue, newValueDesc);
 
                 varConfirmParent.find('.inputValue').remove();
                 varConfirmParent.find('.inputValueDesc').remove();
                 varConfirmParent.find('.markerConfirm').remove();
+                varConfirmParent.find('.imageUpdate').remove();
                 varConfirmParent.find('.spanTitle').append(newValue);
                 varConfirmParent.find('.spanDescription').append(newValueDesc);
+
+                if (newValueImage){
+                varConfirmParent.parent().children('img:first').attr('src', '');
+                varConfirmParent.parent().children('img:first').attr('src', newValueImage);
+                 }else{
+                  newValueImage = "http://maps.gstatic.com/mapfiles/ms2/micons/camera.png";
+                 }
+
                 varConfirmParent.parent().find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
 
-                coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}
+                coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc, newValueImage}
 
 
 
                 markersInfo[markerNew.id] = coordObject;
-
-                console.log(markersInfo);
 
               });
 
@@ -297,7 +264,7 @@
 
             var infowindow = new google.maps.InfoWindow({
               content: contentString,
-              maxWidth: 200
+              maxWidth: 500
             });
 
 
@@ -313,7 +280,6 @@
 
               delete markersInfo[markerNew.id] ;
 
-              console.log(markersInfo);
             });
 
             // let coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}

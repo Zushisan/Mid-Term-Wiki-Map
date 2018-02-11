@@ -1,49 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
+    <title>WIKI MAP</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+<!--     <link rel="stylesheet" href="/styles/bootstrap/css/bootstrap.min.css" > -->
 
-      <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-      <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+<!--     <script type="text/javascript" src="/styles/bootstrap/js/bootstrap.min.js"></script> -->
 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 70%;
+        margin: 10px;
+        border: 1px solid #4C3C1B;
+        padding: 5px;
+        background-color: #EFEECB;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+     <% include ./partials/_header %>
   </head>
+
   <body>
-    <% include ./partials/_header %>
+       <div id="map">
 
 
-  <main class="container">
+       </div>
+    <script>
+
+      var map;
+      var locationToronto = {lat: 43.6532, lng: -79.3832};
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: locationToronto,
+          zoom: 12,
+          zoomControl: true,
+          mapTypeControl: true,
+          scaleControl: true,
+          streetViewControl: true,
+          rotateControl: true,
+          fullscreenControl: true
+        });
+
+ }
 
 
-        <section>
-          <form method="GET" action="/maps">
-            <button type="submit" class="toronto">Best Restaurants in Toronto</button>
-          </form>
-        </section>
+    </script>
+        <a href="/index"><button class='toCreateMap bottomButton col-xs-6 col-sm-6 col-md-6 col-lg-6' type="submit" >CREATE MAP</button></a>
+        <a href="/all"><button class='toSeeMap bottomButton col-xs-6 col-sm-6 col-md-6 col-lg-6' type="submit">ALL MAPS</button></a>
 
-        <div class="categoriesTop">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtXOaqqDPKHhH2X8Oog8vYdwmqrQn7Lpc&callback=initMap"
+    async defer>
 
-          <div class="food"><h4>Food</h4><ul></ul></div>
-          <div class="movies"><h4>Movie</h4></div>
-          <div class="bars"><h4>Bar</h4></div>
-          <div class="hiking"><h4>Hiking</h4></div>
-
-        </div>
-        <div class="categoriesBot">
-
-          <div class="sport"><h4>Sport</h4></div>
-          <div class="stuff"><h4>Stuff</h4></div>
-          <div class="things"><h4>Thing</h4></div>
-          <div class="misc"><h4>Misc</h4></div>
-
-        </div>
+    </script>
 
 
-  </main>
 
 
   </body>
+  <footer>
+
+  </footer>
 </html>

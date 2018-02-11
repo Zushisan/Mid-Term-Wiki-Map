@@ -47,6 +47,51 @@ module.exports = (knex) => {
 
   });
 
+     router.post("/:id/edit", (req, res) => {
+
+
+    let mapLat = req.body.mapObject.lat.toString();
+    let mapLng = req.body.mapObject.lng.toString();
+    let mapUserID = 4;
+
+    //points database entry
+    let markersInfo = req.body.markersInfo;
+    // let markerLat = '';
+    // let markerLng = '';
+    // let markerTitle = "All the markers title";
+    // let markerDescription = "I am a marker description";
+    //let markerImg = "I am an img ???";
+
+    knex('maps')
+      .returning(['id'])
+      .where('id', req.body.mapID)
+      .update({lat: mapLat, long: mapLng})
+      .then((mapID) => {
+        let markersInsert = [];
+        for(let markerKey in markersInfo){
+          let markerObject = markersInfo[markerKey];
+          let futurMarkerObject = {}
+
+          futurMarkerObject.lat = markerObject.latMarkerNew.toString();
+          futurMarkerObject.long = markerObject.lngMarkerNew.toString();
+          futurMarkerObject.title = markerObject.newValue;
+          futurMarkerObject.description = markerObject.newValueDesc;
+          futurMarkerObject.img = markerObject.newValueImage;
+          futurMarkerObject.map_id = mapID[0].id;
+
+          markersInsert.push(futurMarkerObject);
+        }
+
+        return knex('points')
+                .returning(['id'])
+                .insert(markersInsert)
+      }).then((results) => {
+                res.json(results)
+            });
+
+
+  });
+
   return router;
 }
 

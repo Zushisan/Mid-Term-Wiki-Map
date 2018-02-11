@@ -1,43 +1,39 @@
 
+        <div class="container-fluid">
+           <nav id="nav-bar">
+              <div class="nav">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <form action='/' method='GET'>
+                      <button>HOME</button>
+                    </form>
+                  </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <button class='toLogin' type='button'>LOGIN</button>
+                  <form class='login' action='/login' method='POST'>
+                    <input type='text' id='fname' name='username' placeholder="Username">
+                    <input type='text' id='fpassword' name='password' placeholder="Password">
+                    <input type="submit" name="submitLogin" value="LOGIN">
+                  </form>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <button class='toRegister' type='button' >REGISTER</button>
+                  <form class='register' action='/register' method='POST'>
+                    <input type='text' id='fname' name='username' placeholder="Username">
+                    <input type='text' id='fpassword' name='password' placeholder="Password">
+                    <input type="submit" name="submitRegister" value="REGISTER">
+                  </form>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <a href="/profile"><button class='toUserPro' type='button'>USER PROFILE</button></a>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <button class='toLogout' type='button'>LOGOUT</button>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
 
-  <!-- add nav bar include home, login, logout , user info button -->
-   <nav id="nav-bar">
-    <div class="nav">
 
-          <form action='/' method='GET'>
-            <button>Home</button>
-          </form>
-
-          <form action='/main' method='GET'>
-            <button>Main Page</button>
-          </form>
-
-          <form action='/all' method='GET'>
-            <button class="all-maps-button">All Maps</button>
-          </form>
-
-
-
-        <form class='login' action='/login' method='POST'>
-          <h2>LOGIN</h2>
-          Username:<input name='username'>
-          Password:<input name='password'>
-          <input type="submit" name="submitLogin" value="LOGIN">
-        </form>
-
-
-
-          <form class='register' action='/register' method='POST'>
-            <h2>REGISTER</h2>
-            Username:<input name='username'>
-            Password:<input name='password'>
-          <input type="submit" name="submitRegister" value="REGISTER">
-          </form>
-
-      <button class='toLogout' type='button'>LOGOUT</button>
-
-
-     <button class='toUserPro' type='button'>USER PROFILE</button>
-   </div>
-   </nav>
 

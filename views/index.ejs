@@ -6,9 +6,13 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+<!--     <link rel="stylesheet" href="/styles/bootstrap/css/bootstrap.min.css" > -->
 
-      <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-      <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+<!--     <script type="text/javascript" src="/styles/bootstrap/js/bootstrap.min.js"></script> -->
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
 
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
@@ -16,7 +20,11 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 50%;
+        height: 70%;
+        margin: 10px;
+        border: 1px solid #4C3C1B;
+        padding: 5px;
+        background-color: #EFEECB;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -29,39 +37,16 @@
   </head>
 
   <body>
-
-      <section>
-        <!-- <form method="GET" action="/maps"> -->
-          <button class= "toronto">Best Restaurants in Toronto</button>
-        <!-- </form> -->
-      </section>
-
-
-      <form>
-        Title<br>
-        <input type="text" name="title"><br>
-        Last name:<br>
-        <input type="text" name="Description">
-        <input type="submit" value="Submit">
-      </form>
-
-
-      <form class="newmap" action="api/users/<%= cookie %>/maps" method="POST">
-        Map Title:<input name='map-title'>
-        <button class='toCreateMap' type="submit">CREATE MAP</button>
-      </form>
-
        <div id="map">
 
 
        </div>
     <script>
 
-      // Object with each markers info before request
       let markersInfo = {};
 
 //New
-      let markers = [];
+     let markers = [];
 
       var map;
       var locationToronto = {lat: 43.6532, lng: -79.3832};
@@ -76,6 +61,7 @@
           rotateControl: true,
           fullscreenControl: true
         });
+
 
 // To add a marker by default on the page
          // var marker = new google.maps.Marker({
@@ -128,7 +114,7 @@
 
 // to get marker location and console log the lat and lng
 
-        var icon = "http://maps.google.com/mapfiles/kml/pal2/icon32.png";
+        var icon = "http://icons.iconarchive.com/icons/icons-land/vista-map-markers/32/Map-Marker-Ball-Right-Azure-icon.png";
 
         google.maps.event.addListener(map, 'click', function(event) {
 
@@ -171,72 +157,25 @@
             var lngMarkerNew = markerNew.getPosition().lng();
             // console.log("Marker:", latMarkerNew, lngMarkerNew );
 
-            let coordObject = {latMarkerNew, lngMarkerNew, newValue:"No.1", newValueDesc:"The best restaurant in Toronto"}
+            let coordObject = {latMarkerNew, lngMarkerNew, newValue:"Please enter Title", newValueDesc:"Please enter description",newValueImage: "http://maps.gstatic.com/mapfiles/ms2/micons/camera.png"}
 
             markersInfo[markerNew.id] = coordObject;
 
 
              var contentString =
-            `<div class="whole-button" id="${markerNew.id}">
-                <img src="http://maps.google.com/mapfiles/kml/pal2/icon32.png">
-                <p class="markerTitle"><b>Title:</b><span class="spanTitle"> No.1</span></p>
+            `<img class="image" src="http://maps.gstatic.com/mapfiles/ms2/micons/camera.png">
+            <div class="whole-button" id="${markerNew.id}">
+                <p class="markerTitle"><b>Title:</b><span class="spanTitle"> Please enter Title</span></p>
                 <div id="bodyContent">
-                  <p><b>Description:</b><span class="spanDescription">The best restaurant in Toronto</span></b></p>
+                  <p><b>Description:</b><span class="spanDescription">Please enter description</span></b></p>
                 </div>
                 <button class="markerEdit"> Edit me </button>
             </div>`;
 // `#${markerNew.id}`,
             $(() => {
 
-// <<<<<<< HEAD
-//             $('body').on('click',  `#${markerNew.id}`,".markerEdit", function(event) {
-
-//               console.log(markerNew.id);
-
-//               // let pointID = $(this).parents('div:first').attr('id');
-//               // let pointVar = $(`#${pointID}`);
-
-//               // let $wholeMarker = $(this).parent().parent();
-//               let titleValue = $(this).find(".spanTitle").text();
-
-//               let descriptionValue = $(this).find(".spanDescription").text();
-
-//               // var get = document.getElementById(pointID);
-
-//              $(this).find(".spanTitle").text('');
-
-//               $(this).find(".spanDescription").text('');
-
-//               $(this).find('.spanTitle').append(`<input type="text" class="inputValue" value="${titleValue}">`)
-//               $(this).find('.spanDescription').append(`<input type="text" class="inputValueDesc" value="${descriptionValue}">`)
-
-//               $(this).find('.markerEdit').remove();
-//               $(this).append(`<button class="markerConfirm"> Confirm </button>`);
-
-//               $('body').on('click',`#${markerNew.id}`, ".markerConfirm", function(event){
-
-//                 $(this).find('.markerConfirm').remove();
-
-//                 // let $wholeConfirm = $(this).parent().parent();
-//                 let newValue = $(this).find(".inputValue").val();
-//                 let newValueDesc = $(this).find(".inputValueDesc").val();
-
-//                 console.log(newValue, newValueDesc);
-
-//                 $(this).find('.inputValue').remove();
-//                 $(this).find('.inputValueDesc').remove();
-//                 $(this).find('.markerConfirm').remove();
-//                 $(this).find('.spanTitle').append(newValue);
-//                 $(this).find('.spanDescription').append(newValueDesc);
-//                 $(this).find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
-
-// =======
             $('body').on('click', `#${markerNew.id} .markerEdit`, function(event) {
 
-
-              // $(this).find('.markerConfirm').remove();
-              console.log(markerNew.id);
-              console.log($(this));
 
               let varParent  = $(this).parent();
 
@@ -260,6 +199,10 @@
               varParent.find('.markerEdit').remove();
               varParent.append(`<button class="markerConfirm"> Confirm </button>`);
 
+              varParent.parent().children('div:first').prepend(`<p class="imageUpdate"><b>Update Image (add image) </b>:<input type="text" class="imageInput" value=""><p>`)
+
+              console.log(varParent.parent().children('img:first'));
+
 
 
               $('body').on('click',`#${markerNew.id} .markerConfirm`, function(event){
@@ -271,23 +214,33 @@
                 // let $wholeConfirm = $(this).parent().parent();
                 let newValue = varConfirmParent.find(".inputValue").val();
                 let newValueDesc = varConfirmParent.find(".inputValueDesc").val();
+                let newValueImage = varConfirmParent.find(".imageInput").val();
+
+                console.log(newValueImage);
 
                 // console.log(newValue, newValueDesc);
 
                 varConfirmParent.find('.inputValue').remove();
                 varConfirmParent.find('.inputValueDesc').remove();
                 varConfirmParent.find('.markerConfirm').remove();
+                varConfirmParent.find('.imageUpdate').remove();
                 varConfirmParent.find('.spanTitle').append(newValue);
                 varConfirmParent.find('.spanDescription').append(newValueDesc);
+
+                if (newValueImage){
+                varConfirmParent.parent().children('img:first').attr('src', '');
+                varConfirmParent.parent().children('img:first').attr('src', newValueImage);
+                 }else{
+                  newValueImage = "http://maps.gstatic.com/mapfiles/ms2/micons/camera.png";
+                 }
+
                 varConfirmParent.parent().find('.whole-button').append(`<button class="markerEdit"> Edit me </button>`);
 
-                coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}
+                coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc, newValueImage}
 
 
 
                 markersInfo[markerNew.id] = coordObject;
-
-                console.log(markersInfo);
 
               });
 
@@ -297,7 +250,7 @@
 
             var infowindow = new google.maps.InfoWindow({
               content: contentString,
-              maxWidth: 200
+              maxWidth: 500
             });
 
 
@@ -313,7 +266,6 @@
 
               delete markersInfo[markerNew.id] ;
 
-              console.log(markersInfo);
             });
 
             // let coordObject = {latMarkerNew, lngMarkerNew, newValue, newValueDesc}
@@ -321,10 +273,21 @@
             // console.log(markersInfo);
     }
 
+
  }
 
 
     </script>
+
+
+
+    <form class="newmap" action="api/users/<%= cookie %>/maps” method="POST">
+       <input name="map-title" placeholder="Map Title" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 map-title-class">
+       <button class="toCreateMap bottomButton col-xs-3 col-sm-3 col-md-3 col-lg-3" type="submit">SAVE MAP</button>
+     </form>
+
+        <a href="/all"><button class='toSeeMap bottomButton col-xs-6 col-sm-6 col-md-6 col-lg-6' type="submit">MAPS</button></a>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtXOaqqDPKHhH2X8Oog8vYdwmqrQn7Lpc&callback=initMap"
     async defer>
 

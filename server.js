@@ -89,7 +89,7 @@ app.get("/display/:id", (req, res) => {
       .then((results) => {
         let resultArray = [];
         resultArray.push(results);
-        console.log(req.param.id);
+
         return knex
           .select("*")
           .from("maps")
@@ -100,8 +100,6 @@ app.get("/display/:id", (req, res) => {
 
             templateVars.key = resultArray;
             templateVars.cookie = req.session.user_id;
-            // console.log(templateVars);
-
 
       res.render("display", templateVars);
       });
@@ -121,21 +119,25 @@ app.get("/display/:id", (req, res) => {
       .then((results) => {
 
         req.session.user_id = results[0].id;
-        res.json(results);
+        res.redirect("main");
     });
   });
 
     // Login form doesnt work yet
   app.post('/login', (req, res) => {
-    console.log('login');
+    req.session.user_id = 12345;
+    res.redirect("main");
   });
 
   app.delete('/logout', (req, res) => {
     // cookie session delete
-    console.log('logout');
+    req.session = null;
+    res.redirect("main");
   })
 
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+

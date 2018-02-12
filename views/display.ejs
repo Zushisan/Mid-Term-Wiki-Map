@@ -33,15 +33,17 @@
   </head>
 
   <body>
-<%= cookie %>
+
        <div id="map">
 
-<!-- <%= cookie %> -->
+<% cookie %>
        </div>
     <script>
+
       var markerObjectKey = <%-JSON.stringify(key[0])%>;
       let cookie = <%- cookie %>;
-      // console.log(markerObjectKey)
+
+
 
       var mapLat = <%= key[1][0].lat %>;
       var mapLng = <%= key[1][0].long %>;

@@ -28,5 +28,23 @@ $(() => {
 
   });
 
+  // Favorite submit button
+  $(".map-fav").on('click', function (event){
+    let userID = ($(this).attr("data-user-id"));
+    console.log("i am in before ajax")
+        $.ajax({
+          method: "POST",
+          url: `/api/users/${userID}/maps/${mapID}/fav`,
+          data: {userID, mapID}
+        }).done((res) => {
+          console.log(res, " SUCCESS");
+
+          });
+        event.preventDefault();
+  });
+
+
+
+
 });
 

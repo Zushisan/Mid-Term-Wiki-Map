@@ -64,6 +64,7 @@ app.get("/", (req, res) => {
 
 // Main page
 app.get("/main", (req, res) => {
+
   res.render("main");
 });
 
@@ -72,12 +73,14 @@ app.get("/all", (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  res.render("profile");
+  let templateVars = {cookie: req.session.user_id};
+  res.render("profile", templateVars);
 });
 
 app.get("/display/:id", (req, res) => {
 
-let templateVars = {};
+  let templateVars = {};
+  templateVars.cookie = req.session.user_id;
 // console.log("this in display req: ", req.body);
     knex
       .select("*")
@@ -96,9 +99,9 @@ let templateVars = {};
 
 
             templateVars.key = resultArray;
+            templateVars.cookie = req.session.user_id;
             // console.log(templateVars);
 
-            console.log("checking templatevars:", templateVars.key)
 
       res.render("display", templateVars);
       });

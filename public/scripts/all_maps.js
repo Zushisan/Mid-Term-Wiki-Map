@@ -3,10 +3,10 @@ $(() => {
       method: "GET",
       url: "/maps"
     }).done((maps) => {
+
+      // map.title = decodeURIComponent(map.title);
       for(map of maps) {
-
-        $(`<a href="/display/${map.id}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bottomButton">`).text(map.title).appendTo($("body .all-maps"));
-
+        $(`<a href="/display/${map.id}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bottomButton">`).text(decodeURIComponent(map.title)).appendTo($("body .all-maps"));
       }
     });
   });

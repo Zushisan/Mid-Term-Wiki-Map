@@ -64,6 +64,7 @@ app.get("/", (req, res) => {
 
 // Main page
 app.get("/main", (req, res) => {
+
   res.render("main");
 });
 
@@ -72,12 +73,14 @@ app.get("/all", (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  res.render("profile");
+  let templateVars = {cookie: req.session.user_id};
+  res.render("profile", templateVars);
 });
 
 app.get("/display/:id", (req, res) => {
 
-let templateVars = {};
+  let templateVars = {};
+  templateVars.cookie = req.session.user_id;
 // console.log("this in display req: ", req.body);
     knex
       .select("*")
@@ -86,7 +89,7 @@ let templateVars = {};
       .then((results) => {
         let resultArray = [];
         resultArray.push(results);
-        console.log(req.param.id);
+
         return knex
           .select("*")
           .from("maps")
@@ -96,9 +99,7 @@ let templateVars = {};
 
 
             templateVars.key = resultArray;
-            // console.log(templateVars);
-
-            console.log("checking templatevars:", templateVars.key)
+            templateVars.cookie = req.session.user_id;
 
       res.render("display", templateVars);
       });
@@ -118,21 +119,25 @@ let templateVars = {};
       .then((results) => {
 
         req.session.user_id = results[0].id;
-        res.json(results);
+        res.redirect("main");
     });
   });
 
     // Login form doesnt work yet
   app.post('/login', (req, res) => {
-    console.log('login');
+    req.session.user_id = 12345;
+    res.redirect("main");
   });
 
   app.delete('/logout', (req, res) => {
     // cookie session delete
-    console.log('logout');
+    req.session = null;
+    res.redirect("main");
   })
 
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+

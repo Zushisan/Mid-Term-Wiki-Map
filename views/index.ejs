@@ -102,7 +102,7 @@
 
               $.ajax({
                 method: "POST",
-                url: `api/users/4/maps`,
+                url: `api/users/<%= cookie %>/maps`,
                 data: {title, mapObject, markersInfo}
               }).done((map) => {
                   console.log(map, " SUCCESS");

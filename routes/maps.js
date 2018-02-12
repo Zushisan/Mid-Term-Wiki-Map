@@ -47,26 +47,22 @@ module.exports = (knex) => {
 
   });
 
+let map_ID = 0;
      router.post("/:id/edit", (req, res) => {
-
 
     let mapLat = req.body.mapObject.lat.toString();
     let mapLng = req.body.mapObject.lng.toString();
-    let mapUserID = 4;
+    let mapUserID = req.body.cookie;
 
     //points database entry
     let markersInfo = req.body.markersInfo;
-    // let markerLat = '';
-    // let markerLng = '';
-    // let markerTitle = "All the markers title";
-    // let markerDescription = "I am a marker description";
-    //let markerImg = "I am an img ???";
 
     knex('maps')
       .returning(['id'])
       .where('id', req.body.mapID)
       .update({lat: mapLat, long: mapLng})
       .then((mapID) => {
+        map_ID = mapID[0].id;
         let markersInsert = [];
         for(let markerKey in markersInfo){
           let markerObject = markersInfo[markerKey];
@@ -85,6 +81,11 @@ module.exports = (knex) => {
         return knex('points')
                 .returning(['id'])
                 .insert(markersInsert)
+
+      }).then((results) => {
+
+        return knex('user_map_contributor').insert({map_id: map_ID, user_id: mapUserID})
+
       }).then((results) => {
                 res.json(results)
             });
